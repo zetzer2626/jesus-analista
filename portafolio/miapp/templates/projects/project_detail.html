@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Detalles{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-4 sidebar text-center">
+                <!-- Avatar Section -->
+                <div class="card shadow-sm mb-4 text-center" style="background-color: #2c2c2c; border: none;">
+                    <div class="card-body">
+                        <!-- Avatar Container -->
+                        <div class="avatar-container mb-3">
+                            <img src="{{ project.project_image.url }}" 
+                                 alt="Project Avatar" 
+                                 class="avatar img-fluid rounded-circle border" 
+                                 style="border-color: #ffcc00; border-width: 4px; max-width: 150px;">
+                        </div>
+                
+                        <!-- Project Title -->
+                        <h2 class="mb-3" style="color: #f8f9fa; font-weight: bold;">
+                            {{ project.title }}
+                        </h2>
+                    </div>
+                </div>
+                
+                <br>
+                <br>
+                <br>
+                        <!-- Project Description -->
+                    <div class="card shadow-sm mb-4" style="background-color: #2c2c2c; border: none;">
+                        <div class="card-header" style="background-color: #444; color: #f8f9fa;">
+                            <h5 class="mb-0">
+                                <i class="bi bi-info-circle-fill" style="color: #ffcc00;"></i> Descripción del Proyecto
+                            </h5>
+                        </div>
+                        <div class="card-body" style="color: #dcdcdc;">
+                            <p>{{ project.description }}</p>
+                        </div>
+                    </div>
+                 <br>
+                <br>
+                <br>
+                <!-- Share Section -->
+                <div class="share-buttons mt-3">
+                    <h4 class="mb-2">Compartir</h4>
+                    <!-- Botón para compartir en Twitter -->
+                        <a href="https://twitter.com/intent/tweet?text=¡Mira este increíble proyecto!&url={{ request.build_absolute_uri }}" 
+                        target="_blank" 
+                        class="btn btn-outline-primary btn-sm mb-2">
+                        Compartir en Twitter
+                        </a>
+
+                        <!-- Botón para compartir en LinkedIn -->
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" 
+                        target="_blank" 
+                        class="btn btn-outline-info btn-sm mb-2">
+                        Compartir en LinkedIn
+                        </a>
+                </div>
+            
+                <!-- Optional: Add additional information or actions -->
+                <div class="additional-actions mt-4">
+                    <!-- If you want to add more actions, e.g., download project -->
+                    {% if project.project_file %}
+                        <a href="{{ project.project_file.url }}" class="btn btn-success btn-sm" download>Download File</a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-8">
+                <!-- Gallery -->
+                <div class="content">
+                    <h3>Imágenes del Proyecto</h3>
+                    <div class="gallery">
+                        {% if project.img_1 %}
+                            <img src="{{ project.img_1.url }}" alt="Image 1" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_1.url }}')">
+                        {% endif %}
+                        {% if project.img_2 %}
+                            <img src="{{ project.img_2.url }}" alt="Image 2" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_2.url }}')">
+                        {% endif %}
+                        {% if project.img_3 %}
+                            <img src="{{ project.img_3.url }}" alt="Image 3" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_3.url }}')">
+                        {% endif %}
+                        {% if project.img_4 %}
+                            <img src="{{ project.img_4.url }}" alt="Image 4" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_4.url }}')">
+                        {% endif %}
+                        {% if project.img_5 %}
+                            <img src="{{ project.img_5.url }}" alt="Image 5" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_5.url }}')">
+                        {% endif %}
+                        {% if project.img_6 %}
+                            <img src="{{ project.img_6.url }}" alt="Image 6" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_6.url }}')">
+                        {% endif %}
+                        {% if project.img_7 %}
+                            <img src="{{ project.img_7.url }}" alt="Image 7" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_7.url }}')">
+                        {% endif %}
+                        {% if project.img_8 %}
+                            <img src="{{ project.img_8.url }}" alt="Image 8" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_8.url }}')">
+                        {% endif %}
+                        {% if project.img_9 %}
+                            <img src="{{ project.img_9.url }}" alt="Image 9" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_9.url }}')">
+                        {% endif %}
+                        {% if project.img_10 %}
+                            <img src="{{ project.img_10.url }}" alt="Image 10" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_10.url }}')">
+                        {% endif %}
+                        {% if project.img_11 %}
+                            <img src="{{ project.img_11.url }}" alt="Image 11" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_11.url }}')">
+                        {% endif %}
+                        {% if project.img_12 %}
+                            <img src="{{ project.img_12.url }}" alt="Image 12" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_12.url }}')">
+                        {% endif %}
+                        {% if project.img_13 %}
+                            <img src="{{ project.img_13.url }}" alt="Image 13" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_13.url }}')">
+                        {% endif %}
+                        {% if project.img_14 %}
+                            <img src="{{ project.img_14.url }}" alt="Image 14" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_14.url }}')">
+                        {% endif %}
+                        {% if project.img_15 %}
+                            <img src="{{ project.img_15.url }}" alt="Image 15" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_15.url }}')">
+                        {% endif %}
+                        {% if project.img_16 %}
+                            <img src="{{ project.img_16.url }}" alt="Image 16" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_16.url }}')">
+                        {% endif %}
+                    </div>
+                </div>
+            
+
+                <!-- Video Button -->
+                <div class="content video">
+                    <h3>Video del Proyecto</h3>
+                    {% if project.video_file %}
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal">
+                        <i class="bi bi-play-circle"></i> Ver Video
+                    </button>
+                    {% endif %}
+                    {% if project.video_url %}
+                    <p><a href="{{ project.video_url }}" target="_blank">Watch Video</a></p>
+                    {% endif %}
+                </div>
+
+                <div class="content categories">
+                    <h3>Categorías</h3>
+                    {% for category in project.categorias.all %}
+                        <span class="badge custom-badge me-1">{{ category.nombre }}</span>
+                    {% endfor %}
+                </div>
+
+                <!-- File Download -->
+                <div class="content file-download">
+                    <h3><i class="fas fa-file-download"></i> Descargar Proyecto</h3>
+                    {% if project.project_file %}
+                    <a href="{{ project.project_file.url }}" class="btn btn-primary" download>Download File</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Image View -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl"> <!-- Modal size updated to xl -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="Image" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Video View -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    {% if project.video_file %}
+                    <video controls class="modal-video">
+                        <source src="{{ project.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+        background-color: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+    }
+
+    .avatar-container {
+        margin-bottom: 20px; /* Espacio entre la imagen y el título */
+    }
+
+    .avatar {
+        width: 150px;  /* Aumentar el tamaño de la imagen */
+        height: 150px; /* Asegura que la imagen tenga un tamaño cuadrado */
+        border-radius: 50%;  /* Crea el círculo perfecto */
+        object-fit: cover; /* Ajusta la imagen para que no se deforme */
+        margin-bottom: 20px; /* Espacio entre la imagen y el título */
+    }
+
+    h2 {
+        font-size: 2rem;  /* Tamaño del título */
+        color: #fff;
+    }
+
+    .project-description {
+        margin-top: 20px; /* Desplazar la descripción hacia abajo */
+        color: #bbb; /* Color más suave para la descripción */
+        font-size: 1.1rem; /* Aumentar el tamaño de la descripción */
+        line-height: 1.6; /* Mejorar la legibilidad */
+    }
+
+        .content {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .video {
+            margin-top: 20px;
+        }
+
+        .video button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        .categories {
+            margin-top: 20px;
+        }
+
+        .categories span {
+            background-color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .file-download {
+            margin-top: 20px;
+        }
+
+        /* Modal video styling */
+        .modal-body video {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Modal image styling */
+        .modal-body img {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .categories {
+    margin-top: 20px;
+}
+
+.categories span {
+    background-color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    color: white;
+}
+
+.custom-badge {
+        font-size: 1.5rem;  /* Aumenta el tamaño de la fuente */
+        padding: 10px 20px; /* Aumenta el tamaño del badge */
+        border-radius: 12px; /* Redondea las esquinas */
+        background-color: #007bff; /* Cambia el color de fondo si lo deseas */
+        color: #fff; /* Asegúrate de que el texto sea blanco */
+    }
+    </style>
+{% endblock %}

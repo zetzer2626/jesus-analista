@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Sobre Mí{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Sección de Presentación -->
+    <section class="mb-5 text-center">
+        <div class="row align-items-center">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <img src="{% static 'img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle shadow" alt="Foto de perfil" style="width: 200px; height: 200px; object-fit: cover;">
+            </div>
+            <div class="col-md-8">
+                <h1 class="display-5 fw-bold">Jesús Antonio Navarrete Castillo</h1>
+                <p class="fs-5 text-muted">
+                    Analista de Datos apasionado por transformar datos en conocimiento accionable. Experto en Python, SQL, Power BI y visualización de datos. Ayudo a las empresas a tomar decisiones estratégicas basadas en datos.
+                </p>
+                <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow">Explorar Proyectos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Habilidades -->
+    <section class="mb-5">
+        <h2 class="text-center fw-bold mb-4">Habilidades</h2>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="text-center p-4 shadow rounded-3 bg-white">
+                    <i class="fas fa-code fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Programación</h5>
+                    <p class="text-muted">Python, SQL, Django</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="text-center p-4 shadow rounded-3 bg-white">
+                    <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Análisis de Datos</h5>
+                    <p class="text-muted">Excel, Power BI, SQL</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="text-center p-4 shadow rounded-3 bg-white">
+                    <i class="fas fa-palette fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Visualización de Datos</h5>
+                    <p class="text-muted">Power BI</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Certificaciones -->
+    <section class="mb-5">
+        <h2 class="text-center fw-bold mb-4">Certificaciones</h2>
+        <div class="row g-4">
+            {% for cert in certifications %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-lg border-0 h-100 rounded-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-medal fa-2x text-warning me-3"></i>
+                            <h5 class="card-title mb-0">{{ cert.name }}</h5>
+                        </div>
+                        <p class="text-muted mb-2">Institución: {{ cert.institution }}</p>
+                        <p class="text-muted mb-4">Año: {{ cert.year }}</p>
+                        <a href="{{ cert.certificate_file.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Ver Certificado</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Sección de Experiencia -->
+    <section class="py-5 text-center bg-light rounded shadow">
+        <h2 class="display-6 fw-bold">Más de <span class="text-primary">5 años</span> de experiencia</h2>
+        <p class="fs-5 text-muted">Transformando datos en soluciones estratégicas para diversas industrias.</p>
+    </section>
+</div>
+
+<style>
+    /* Estilos generales */
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h1, h2, h5 {
+        color: #333;
+    }
+
+    .text-primary {
+        color: #0d6efd !important;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-lg {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .rounded {
+        border-radius: 8px !important;
+    }
+
+    .rounded-4 {
+        border-radius: 12px !important;
+    }
+
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
+
+    .btn {
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3 !important;
+    }
+
+    /* Estilo de sección de habilidades */
+    .fa-3x {
+        font-size: 2rem;
+    }
+
+    /* Certificaciones */
+    .card {
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    /* Sección de experiencia */
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+</style>
+{% endblock %}
+

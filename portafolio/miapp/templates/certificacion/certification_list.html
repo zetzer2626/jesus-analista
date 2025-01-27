@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Certificaciones{% endblock %}
+
+{% block content %}
+    <!-- Sección de Certificaciones -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4 text-primary">Certificaciones</h2>
+        <div class="row">
+            {% for cert in certifications %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg rounded-lg overflow-hidden">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-medal fa-3x text-warning mr-3"></i>
+                            <h5 class="card-title text-dark">{{ cert.name }}</h5>
+                        </div>
+                        <p class="card-text text-muted"><strong>Institución:</strong> {{ cert.institution }}</p>
+                        <p class="card-text text-muted"><strong>Año:</strong> {{ cert.year }}</p>
+                        <a href="{{ cert.certificate_file.url }}" target="_blank" class="btn btn-outline-primary mt-auto">Ver Certificado</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        /* Estilos para la sección de Certificaciones */
+        .card {
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .card .btn {
+            padding: 0.8rem 1.5rem;
+            font-weight: 500;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card .btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .text-warning {
+            color: #ffc107 !important;
+        }
+
+        .fa-medal {
+            margin-right: 15px;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        @media (max-width: 768px) {
+            .fa-medal {
+                margin-right: 8px;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .card .btn {
+                padding: 0.6rem 1.3rem;
+            }
+        }
+    </style>
+{% endblock %}

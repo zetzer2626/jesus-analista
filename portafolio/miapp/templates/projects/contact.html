@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <div class="container">
+        <h2 class="text-primary mb-4">Contacto</h2>
+        <p class="lead mb-5">Si tienes alguna consulta o deseas más información, no dudes en contactarme a través de los siguientes medios.</p>
+
+        <!-- Contacto por correo -->
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                <p><strong>Correo electrónico:</strong></p>
+                <a href="mailto:{{ email }}" class="contact-link">{{ email }}</a>
+            </div>
+        </div>
+
+        <!-- Opcional: Agregar teléfono -->
+        <!-- <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-phone-alt fa-3x text-primary mb-3"></i>
+                <p><strong>Teléfono:</strong></p>
+                <a href="tel:{{ phone }}" class="contact-link">{{ phone }}</a>
+            </div>
+        </div> -->
+
+        <!-- Redes Sociales (opcional) -->
+        <div class="social-links mt-4">
+            <p class="mb-3"><strong>Redes Sociales:</strong></p>
+            <a href="#" class="social-icon text-primary mx-2">
+                <i class="fab fa-facebook fa-2x"></i>
+            </a>
+            <a href="#" class="social-icon text-primary mx-2">
+                <i class="fab fa-twitter fa-2x"></i>
+            </a>
+            <a href="#" class="social-icon text-primary mx-2">
+                <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact-section {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+        text-align: center;
+        border-top: 4px solid #007bff;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .contact-section h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 30px;
+        animation: slideIn 1s ease-in-out;
+    }
+
+    .contact-section p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #555;
+    }
+
+    .contact-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 40px;
+    }
+
+    .contact-item {
+        margin-bottom: 20px;
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 450px;
+        width: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-item i {
+        color: #007bff;
+    }
+
+    .contact-link {
+        font-size: 1.25rem;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .contact-link:hover {
+        text-decoration: underline;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .social-icon {
+        color: #007bff;
+        transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+        color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .contact-item {
+            width: 100%;
+            max-width: none;
+        }
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+</style>
+
+{% endblock %}

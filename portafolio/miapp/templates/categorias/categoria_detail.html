@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ categoria.nombre }} - Detalle{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Título de la categoría -->
+    <h2 class="text-center mb-4 display-5 fw-bold text-primary">{{ categoria.nombre }}</h2>
+    <p class="text-center text-muted fs-5">{{ categoria.descripcion }}</p>
+
+    <!-- Sección de Proyectos -->
+    <div class="projects-section mt-5">
+        {% if proyectos %}
+        <div class="row g-4">
+            {% for project in proyectos %}
+            <div class="col-md-3">
+                <div class="card project-card border-0 rounded-4 position-relative">
+                    <!-- Etiquetas de Categorías -->
+                    <div class="position-absolute top-0 start-0 m-3">
+                        {% for cat in project.categorias.all %}
+                        <span class="badge badge-category">{{ cat.nombre }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Imagen del proyecto -->
+                    {% if project.project_image %}
+                    <img src="{{ project.project_image.url }}" class="card-img-top rounded-top" alt="{{ project.title }}" onerror="this.onerror=null;this.src='{% static 'img/default-project.jpg' %}';">
+                    {% else %}
+                    <img src="{% static 'img/default-project.jpg' %}" class="card-img-top rounded-top" alt="Sin imagen disponible">
+                    {% endif %}
+
+                    <!-- Contenido -->
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-bold">{{ project.title }}</h5>
+                        <p class="card-text text-muted text-center">{{ project.description|truncatewords:15 }}</p>
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="card-footer text-center bg-light">
+                        <a href="{% url 'project_detail' project.id %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-eye"></i> Ver Más
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center text-muted">No hay proyectos en esta categoría.</p>
+        {% endif %}
+    </div>
+
+    <!-- Botón para volver a la lista de categorías -->
+    <div class="mt-5 text-center">
+        <a href="{% url 'categoria_list' %}" class="btn btn-secondary btn-lg px-5">
+            <i class="fas fa-arrow-left"></i> Volver a Categorías
+        </a>
+    </div>
+</div>
+
+<style>
+    /* Tarjeta del proyecto */
+.project-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del proyecto */
+.project-card img {
+    border-radius: 20px 20px 0 0;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* Títulos y descripción */
+.project-card .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.project-card .card-text {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Etiquetas de categorías */
+.badge-category {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    background-color: #007bff;
+    color: #fff;
+    margin: 0.2rem;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge-category:nth-child(2) {
+    background-color: #28a745;
+}
+
+.badge-category:nth-child(3) {
+    background-color: #ffc107;
+}
+
+/* Botón de "Ver Más" */
+.project-card .btn {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.project-card .btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* Diseño responsive */
+@media (max-width: 768px) {
+    .project-card img {
+        height: 120px;
+    }
+
+    .project-card .card-title {
+        font-size: 0.9rem;
+    }
+
+    .project-card .card-text {
+        font-size: 0.8rem;
+    }
+}
+
+</style>
+{% endblock %}
