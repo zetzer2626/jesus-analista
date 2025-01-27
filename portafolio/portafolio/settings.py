@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ur1s#$3bs%e%_6g^rej3m*hw)whwg_u^-mt=v085$d2g5xaunh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -127,3 +127,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'portafolio/static')
 ]
+
+ALLOWED_HOSTS = ['localhost','primer-portafolio-production.up.railway.app']
