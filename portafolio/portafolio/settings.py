@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,11 +80,25 @@ WSGI_APPLICATION = 'portafolio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import dj_database_url
+from urllib.parse import urlparse
 
+# Obtiene la URL de la base de datos desde la variable de entorno
+database_url = os.getenv('DATABASE_URL')
+url = urlparse(database_url)
+
+# Configuración de la base de datos
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Cambia el motor de PostgreSQL a SQLite
-        'NAME': BASE_DIR / 'db.sqlite3',  # Usa un archivo de base de datos SQLite
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': url.path[1:],  # Nombre de la base de datos
+        'USER': url.username,  # Usuario
+        'PASSWORD': url.password,  # Contraseña
+        'HOST': url.hostname,  # Host
+        'PORT': url.port,  # Puerto
+        'OPTIONS': {
+            'sslmode': 'require',  # Configuración SSL
+        }
     }
 }
 
@@ -118,7 +136,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-import os
+
+
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -139,4 +159,4 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ALLOWED_HOSTS = ['localhost','primer-portafolio-production.up.railway.app']
 
-CSRF_TRUSTED__ORIGINS = ['https://primer-portafolio-production.up.railway.app']
+CSRF_TRUSTED__ORIGINS = ['https://*','https://primer-portafolio-production.up.railway.app']
