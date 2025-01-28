@@ -159,4 +159,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ALLOWED_HOSTS = ['localhost','primer-portafolio-production.up.railway.app']
 
-CSRF_TRUSTED__ORIGINS = ['https://*','https://primer-portafolio-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    'https://primer-portafolio-production.up.railway.app',
+]
