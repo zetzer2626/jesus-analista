@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ur1s#$3bs%e%_6g^rej3m*hw)whwg_u^-mt=v085$d2g5xaunh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 
@@ -134,5 +134,6 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 ALLOWED_HOSTS = ['localhost','primer-portafolio-production.up.railway.app']
