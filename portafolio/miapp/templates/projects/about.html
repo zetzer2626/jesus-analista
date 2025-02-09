@@ -8,19 +8,27 @@
 <div class="container my-5">
     <!-- Sección de Presentación -->
     <section class="mb-5 text-center">
-        <div class="row align-items-center">
-            <div class="col-md-4 mb-4 mb-md-0">
-                <img src="{% static '/img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle shadow" alt="Foto de perfil" style="width: 200px; height: 200px; object-fit: cover;">
-            </div>
-            <div class="col-md-8">
-                <h1 class="display-5 fw-bold">Jesús Antonio Navarrete Castillo</h1>
-                <p class="fs-5 text-muted">
-                    Soy Analista de Datos y Desarrollador de Software, con experiencia en Python, SQL, Power BI y visualización de datos. Me apasiona trabajar con grandes volúmenes de información y convertirlos en insights valiosos que ayuden a las empresas a tomar decisiones más informadas. Además, me dedico al desarrollo de soluciones tecnológicas que optimizan procesos y mejoran la eficiencia en las organizaciones. Mi objetivo es combinar mis habilidades en datos y programación para crear herramientas que marquen la diferencia.
-                </p>
-                <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow">Explorar Proyectos</a>
+        <div class="card shadow-lg border-0">
+            <div class="row g-0 align-items-center">
+                <div class="col-md-4">
+                    <img src="{% static '/img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle" alt="Foto de perfil" style="width: 200px; height: 200px; object-fit: cover;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h1 class="display-5 fw-bold">Jesús Antonio Navarrete Castillo</h1>
+                        <p class="fs-5 text-muted">
+                            <i class="bi bi-briefcase me-2"></i>Analista de Datos y Desarrollador de Software, con experiencia en Python, SQL, Power BI y visualización de datos. Me apasiona trabajar con grandes volúmenes de información y convertirlos en insights valiosos que ayuden a las empresas a tomar decisiones más informadas.
+                        </p>
+                        <p class="fs-5 text-muted">
+                            <i class="bi bi-code-slash me-2"></i>Además, me dedico al desarrollo de soluciones tecnológicas que optimizan procesos y mejoran la eficiencia en las organizaciones. Mi objetivo es combinar mis habilidades en datos y programación para crear herramientas que marquen la diferencia.
+                        </p>
+                        <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow"><i class="bi bi-folder-symlink me-2"></i>Explorar Proyectos</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+    
 
     <!-- Sección de Habilidades -->
     <section class="mb-5">
