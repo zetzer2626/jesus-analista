@@ -77,9 +77,13 @@
                 <div class="content">
                     <h3>Imágenes del Proyecto</h3>
                     <div class="gallery">
+
                         {% if project.img_1 %}
-                            <img src="{{ project.img_1.url }}" alt="Image 1" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_1.url }}')">
+                        <img src="{{ project.img_1.url }}" class="card-img-top">
+                        {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="Sin imagen">
                         {% endif %}
+
                         {% if project.img_2 %}
                             <img src="{{ project.img_2.url }}" alt="Image 2" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_2.url }}')">
                         {% endif %}
