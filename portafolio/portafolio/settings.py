@@ -126,8 +126,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Configuración para almacenamiento persistente en Railway
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'  # Esto ya está bien
+MEDIA_ROOT = '/app/data/media'  # Aquí asegúrate que apunta al volumen persistente
+
 
 # Asegurar que Railway pueda servir archivos estáticos y de medios correctamente
 WHITENOISE_USE_FINDERS = True
