@@ -77,55 +77,55 @@
                 <div class="content">
                     <h3>Imágenes del Proyecto</h3>
                     <div class="gallery">
-                        {% if project.img_1 %}
+                        {% if project.img_1 and project.img_1.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_1.url }}" alt="Image 1" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_1.url }}')">
                         {% endif %}
-                        {% if project.img_2 %}
+                        {% if project.img_2 and project.img_2.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_2.url }}" alt="Image 2" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_2.url }}')">
                         {% endif %}
-                        {% if project.img_3 %}
+                        {% if project.img_3 and project.img_3.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_3.url }}" alt="Image 3" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_3.url }}')">
                         {% endif %}
-                        {% if project.img_4 %}
+                        {% if project.img_4 and project.img_4.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_4.url }}" alt="Image 4" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_4.url }}')">
                         {% endif %}
-                        {% if project.img_5 %}
+                        {% if project.img_5 and project.img_5.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_5.url }}" alt="Image 5" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_5.url }}')">
                         {% endif %}
-                        {% if project.img_6 %}
+                        {% if project.img_6 and project.img_6.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_6.url }}" alt="Image 6" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_6.url }}')">
                         {% endif %}
-                        {% if project.img_7 %}
+                        {% if project.img_7 and project.img_7.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_7.url }}" alt="Image 7" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_7.url }}')">
                         {% endif %}
-                        {% if project.img_8 %}
+                        {% if project.img_8 and project.img_8.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_8.url }}" alt="Image 8" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_8.url }}')">
                         {% endif %}
-                        {% if project.img_9 %}
+                        {% if project.img_9 and project.img_9.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_9.url }}" alt="Image 9" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_9.url }}')">
                         {% endif %}
-                        {% if project.img_10 %}
+                        {% if project.img_10 and project.img_10.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_10.url }}" alt="Image 10" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_10.url }}')">
                         {% endif %}
-                        {% if project.img_11 %}
+                        {% if project.img_11 and project.img_11.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_11.url }}" alt="Image 11" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_11.url }}')">
                         {% endif %}
-                        {% if project.img_12 %}
+                        {% if project.img_12 and project.img_12.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_12.url }}" alt="Image 12" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_12.url }}')">
                         {% endif %}
-                        {% if project.img_13 %}
+                        {% if project.img_13 and project.img_13.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_13.url }}" alt="Image 13" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_13.url }}')">
                         {% endif %}
-                        {% if project.img_14 %}
+                        {% if project.img_14 and project.img_14.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_14.url }}" alt="Image 14" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_14.url }}')">
                         {% endif %}
-                        {% if project.img_15 %}
+                        {% if project.img_15 and project.img_15.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_15.url }}" alt="Image 15" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_15.url }}')">
                         {% endif %}
-                        {% if project.img_16 %}
+                        {% if project.img_16 and project.img_16.url|lower|slice:'-4:' in '.jpg .jpeg .png .gif .webp' %}
                             <img src="{{ project.img_16.url }}" alt="Image 16" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ project.img_16.url }}')">
                         {% endif %}
-                    </div>
+                    </div>                    
                 </div>
             
 
