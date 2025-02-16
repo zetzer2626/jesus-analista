@@ -8,21 +8,34 @@
 <div class="container my-5">
     <!-- Sección de Presentación -->
     <section class="mb-5 text-center">
-        <div class="card shadow-lg border-0">
-            <div class="row g-0 align-items-center">
-                <div class="col-md-4">
-                    <img src="{% static '/img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle border" alt="Foto de perfil" style="width: 250px; height: 250px; object-fit: cover;">
+        <div class="card shadow-lg border-0 p-4">
+            <div class="row g-0 justify-content-center align-items-center">
+                <div class="col-md-12 mb-4">
+                    <div class="d-flex justify-content-center">
+                        <div class="position-relative">
+                            <img src="{% static '/img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle border shadow-lg" 
+                                 alt="Foto de perfil" style="width: 200px; height: 200px; object-fit: cover;">
+                            <span class="position-absolute bottom-0 end-0 bg-primary text-white p-2 rounded-circle">
+                                <i class="bi bi-person-circle"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
+                <div class="col-md-12">
+                    <div class="card-body text-center">
                         <h1 class="display-4 fw-bold text-dark">Jesús Antonio Navarrete Castillo</h1>
-                        <p class="fs-5 text-muted mb-4">
+                        <p class="fs-5 text-muted mb-3">
                             <i class="bi bi-briefcase-fill me-2"></i>
-                            <strong>Analista de Datos y Desarrollador de Software</strong>, con experiencia en Python, SQL, Power BI y visualización de datos. Me apasiona trabajar con grandes volúmenes de información y convertirlos en insights valiosos que ayuden a las empresas a tomar decisiones más informadas.
+                            <strong>Analista de Datos & Desarrollador de Software</strong>
                         </p>
-                        <p class="fs-5 text-muted mb-4">
-                            <i class="bi bi-code-slash me-2"></i>
-                            Además, me dedico al desarrollo de soluciones tecnológicas que optimizan procesos y mejoran la eficiencia en las organizaciones. Mi objetivo es combinar mis habilidades en datos y programación para crear herramientas que marquen la diferencia.
+                        <p class="fs-5 text-muted">
+                            <i class="bi bi-bar-chart-line me-2"></i> Experiencia en Python, SQL, Power BI y visualización de datos.
+                        </p>
+                        <p class="fs-5 text-muted">
+                            <i class="bi bi-code-slash me-2"></i> Desarrollo de soluciones tecnológicas para optimización de procesos.
+                        </p>
+                        <p class="fs-5 text-muted">
+                            <i class="bi bi-lightbulb me-2"></i> Pasión por convertir datos en insights valiosos para decisiones estratégicas.
                         </p>
                         <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow-lg px-4 py-2">
                             <i class="bi bi-folder-symlink me-2"></i>Explorar Proyectos
@@ -32,6 +45,7 @@
             </div>
         </div>
     </section>
+    
     
 
 <!-- Sección de Habilidades -->
