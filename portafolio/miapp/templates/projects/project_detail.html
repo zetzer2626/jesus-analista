@@ -5,36 +5,11 @@
 
 {% block content %}
 <div class="container py-5">
-
-    <div class="row mb-5">
-        <!-- Imagen Principal -->
-        <div class="col-md-6 mb-4">
-            <div class="profile-image-container shadow-lg rounded-lg overflow-hidden">
-                {% if project.project_image %}
-                    <img src="{{ project.project_image.url }}" alt="{{ project.title }}" class="img-fluid rounded">
-                {% else %}
-                    <img src="{% static 'images/placeholder.png' %}" alt="Imagen del Proyecto" class="img-fluid rounded">
-                {% endif %}
-            </div>
-        </div>
-        <!-- Detalles del Proyecto -->
-        <div class="col-md-6">
-            <div class="project-details p-4 shadow-lg rounded-lg bg-light">
-                <h3 class="text-muted">Descripción Detallada</h3>
-
-                <div class="collapse mt-2" id="descripcionCollapse">
-                    <p class="text-dark">{{ project.description|linebreaks }}</p>
-                </div>
-                <h4 class="mt-4 text-muted">Categoría</h4>
-                <ul class="list-inline mb-4">
-                    {% for categoria in project.categorias.all %}
-                        <li class="list-inline-item badge badge-pill badge-info"><strong>{{ categoria.nombre }}</strong></li>
-                    {% endfor %}
-                </ul>
-                <hr>
-                <p><strong>Fecha de Creación:</strong> {{ project.created_at|date:"F j, Y" }}</p>
-            </div>
-        </div>
+    
+    <!-- Tarjeta del Proyecto -->
+    <div class="card shadow-lg rounded-lg mb-5 p-4">
+        <h2 class="text-center text-primary">{{ project.title }}</h2>
+        <p class="lead text-center text-muted">{{ project.description|linebreaks }}</p>
     </div>
 
     <!-- Video del Proyecto -->
@@ -59,56 +34,16 @@
         <h3 class="text-center text-muted mb-4">Galería de Imágenes</h3>
         <div id="projectImageCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                {% if project.img_1 %}
-                    <div class="carousel-item active">
-                        <img src="{{ project.img_1.url }}" class="d-block w-100" alt="Imagen 1">
-                    </div>
-                {% endif %}
-                {% if project.img_2 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_2.url }}" class="d-block w-100" alt="Imagen 2">
-                    </div>
-                {% endif %}
-                {% if project.img_3 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_3.url }}" class="d-block w-100" alt="Imagen 3">
-                    </div>
-                {% endif %}
-                {% if project.img_4 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_4.url }}" class="d-block w-100" alt="Imagen 4">
-                    </div>
-                {% endif %}
-                {% if project.img_5 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_5.url }}" class="d-block w-100" alt="Imagen 5">
-                    </div>
-                {% endif %}
-                {% if project.img_6 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_6.url }}" class="d-block w-100" alt="Imagen 6">
-                    </div>
-                {% endif %}
-                {% if project.img_7 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_7.url }}" class="d-block w-100" alt="Imagen 7">
-                    </div>
-                {% endif %}
-                {% if project.img_8 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_8.url }}" class="d-block w-100" alt="Imagen 8">
-                    </div>
-                {% endif %}
-                {% if project.img_9 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_9.url }}" class="d-block w-100" alt="Imagen 9">
-                    </div>
-                {% endif %}
-                {% if project.img_10 %}
-                    <div class="carousel-item">
-                        <img src="{{ project.img_10.url }}" class="d-block w-100" alt="Imagen 10">
-                    </div>
-                {% endif %}
+                {% if project.img_1 %}<div class="carousel-item active"><img src="{{ project.img_1.url }}" class="d-block w-100" alt="Imagen 1"></div>{% endif %}
+                {% if project.img_2 %}<div class="carousel-item"><img src="{{ project.img_2.url }}" class="d-block w-100" alt="Imagen 2"></div>{% endif %}
+                {% if project.img_3 %}<div class="carousel-item"><img src="{{ project.img_3.url }}" class="d-block w-100" alt="Imagen 3"></div>{% endif %}
+                {% if project.img_4 %}<div class="carousel-item"><img src="{{ project.img_4.url }}" class="d-block w-100" alt="Imagen 4"></div>{% endif %}
+                {% if project.img_5 %}<div class="carousel-item"><img src="{{ project.img_5.url }}" class="d-block w-100" alt="Imagen 5"></div>{% endif %}
+                {% if project.img_6 %}<div class="carousel-item"><img src="{{ project.img_6.url }}" class="d-block w-100" alt="Imagen 6"></div>{% endif %}
+                {% if project.img_7 %}<div class="carousel-item"><img src="{{ project.img_7.url }}" class="d-block w-100" alt="Imagen 7"></div>{% endif %}
+                {% if project.img_8 %}<div class="carousel-item"><img src="{{ project.img_8.url }}" class="d-block w-100" alt="Imagen 8"></div>{% endif %}
+                {% if project.img_9 %}<div class="carousel-item"><img src="{{ project.img_9.url }}" class="d-block w-100" alt="Imagen 9"></div>{% endif %}
+                {% if project.img_10 %}<div class="carousel-item"><img src="{{ project.img_10.url }}" class="d-block w-100" alt="Imagen 10"></div>{% endif %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#projectImageCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -120,71 +55,37 @@
             </button>
         </div>
     </div>
-    
-    <!-- Archivos del Proyecto -->
-    {% if project.project_file %}
-    <div class="mb-5 text-center">
-        <h4 class="text-muted">Archivos Adicionales</h4>
-        <a href="{{ project.project_file.url }}" class="btn btn-success btn-lg shadow-sm" download>
-            <i class="fas fa-download"></i> Descargar Archivos
-        </a>
-    </div>
-    {% endif %}
 
     <!-- Botón de Volver -->
-    <div class="mt-4 text-center">
+    <div class="text-center">
         <a href="{% url 'project_list' %}" class="btn btn-dark btn-lg shadow-sm">
             <i class="fas fa-arrow-left"></i> Volver a la Lista de Proyectos
         </a>
     </div>
 </div>
 
-{% endblock %}
 
 <style>
-    /* Mejoras visuales */
-    .profile-image-container img {
+    .card {
+        background-color: #f8f9fa;
         border-radius: 15px;
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     }
-
-    .project-details {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 20px;
+    .video-container iframe, .video-container video {
+        border-radius: 15px;
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     }
-
     .carousel-inner img {
         border-radius: 10px;
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
     }
-
-    .video-container iframe {
-        border-radius: 15px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    }
-
     .btn {
         border-radius: 50px;
         transition: all 0.3s ease;
     }
-
     .btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
-
-    .shadow-lg {
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .rounded-lg {
-        border-radius: 15px;
-    }
-
-    /* Estilo para las cajas de texto */
-    h3, h4 {
-        margin-bottom: 1rem;
-    }
 </style>
+{% endblock %}
