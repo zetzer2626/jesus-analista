@@ -1,7 +1,3 @@
-"""
-Django settings for portafolio project.
-"""
-
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -37,8 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'miapp',
     'whitenoise.runserver_nostatic',
-    'cloudinary',
-    'cloudinary_storage',
+    'storages',
 ]
 
 # Middlewares
@@ -83,13 +78,13 @@ url = urlparse(database_url)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': url.path[1:],  # Nombre de la base de datos
-        'USER': url.username,  # Usuario
-        'PASSWORD': url.password,  # Contraseña
-        'HOST': url.hostname,  # Host
-        'PORT': url.port,  # Puerto
+        'NAME': url.path[1:],
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port,
         'OPTIONS': {
-            'sslmode': 'require',  # Configuración SSL
+            'sslmode': 'require',
         }
     }
 }
@@ -114,13 +109,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'miapp/static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Configuración de Cloudinary para almacenamiento de archivos multimedia
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Configuración de Dropbox para almacenamiento de archivos multimedia
+DROPBOX_OAUTH2_TOKEN = os.getenv('DROPBOX_OAUTH2_TOKEN')
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DROPBOX_ROOT_PATH = '/media/'
 MEDIA_URL = '/media/'
 
 # Configuración para Railway
