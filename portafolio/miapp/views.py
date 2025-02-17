@@ -75,9 +75,6 @@ class ProjectDetailView(DetailView):
     model = Project
     template_name = 'projects/project_detail.html'
     context_object_name = 'project'
-    
-    def get_queryset(self):
-        return super().get_queryset().prefetch_related('categorias')
 
 class ProjectCreateView(CreateView):
     model = Project

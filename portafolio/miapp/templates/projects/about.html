@@ -5,168 +5,157 @@
 {% block title %}Sobre Mí{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<div class="container">
     <!-- Sección de Presentación -->
-    <section class="mb-5 text-center">
-        <div class="card shadow-lg border-0 p-4">
-            <div class="row g-0 justify-content-center align-items-center">
-                <div class="col-md-12 mb-4">
-                    <div class="d-flex justify-content-center">
-                        <div class="position-relative">
-                            <img src="{% static '/img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle border shadow-lg" 
-                                 alt="Foto de perfil" style="width: 200px; height: 200px; object-fit: cover;">
-                            <span class="position-absolute bottom-0 end-0 bg-primary text-white p-2 rounded-circle">
-                                <i class="bi bi-person-circle"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card-body text-center">
-                        <h1 class="display-4 fw-bold text-dark">Jesús Antonio Navarrete Castillo</h1>
-                        <p class="fs-5 text-muted mb-3">
-                            <i class="bi bi-briefcase-fill me-2"></i>
-                            <strong>Backend Developer & Analista de Datos</strong>
-                        </p>
-                        <p class="fs-5 text-muted">
-                            <i class="bi bi-code-slash me-2"></i> Especializado en Python y Django para el desarrollo backend.
-                        </p>
-                        <p class="fs-5 text-muted">
-                            <i class="bi bi-bar-chart-line me-2"></i> Experto en análisis de datos con SQL, Power BI y visualización de datos.
-                        </p>
-                        <p class="fs-5 text-muted">
-                            <i class="bi bi-cpu me-2"></i> Apasionado por la inteligencia artificial y el machine learning.
-                        </p>
-                        <p class="fs-5 text-muted">
-                            <i class="bi bi-lightbulb me-2"></i> Persona curiosa, en constante aprendizaje y siempre en busca de nuevos desafíos.
-                        </p>
-                        <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow-lg px-4 py-2">
-                            <i class="bi bi-folder-symlink me-2"></i>Explorar Proyectos
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <div class="row align-items-center mb-5">
+        <div class="col-md-4 d-flex justify-content-center">
+            <img src="{% static 'img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle shadow-lg" alt="Foto de perfil" style="width: 180px; height: 180px; object-fit: cover;">
         </div>
-    </section>    
-    <!-- Sección de Final -->
-  
-    
-<!-- Sección de Habilidades -->
-<section class="mb-5">
-    <h2 class="text-center fw-bold mb-4">Habilidades Profesionales</h2>
-    <div class="row g-4">
-        <div class="col-lg-4 col-md-6">
-            <div class="text-center p-4 shadow-lg rounded-3 bg-light">
-                <i class="fas fa-code fa-3x text-primary mb-3"></i>
-                <h5 class="fw-bold text-dark">Programación</h5>
-                <p class="text-muted">Python, MySQL, Django</p>
-            </div>
+        <div class="col-md-8">
+            <h1 class="mb-3">Hola, soy Jesús Antonio Navarrete Castillo</h1>
+            <p class="lead">
+                Analista de Datos apasionado por transformar datos en conocimiento accionable. Con experiencia en Python, SQL, Excel, Power BI, y la creación de visualizaciones impactantes, ayudo a las organizaciones a tomar decisiones informadas.
+            </p>
+            <a href="{% url 'project_list' %}" class="btn btn-primary mt-3">Explora Mis Proyectos</a>
         </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="text-center p-4 shadow-lg rounded-3 bg-light">
-                <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
-                <h5 class="fw-bold text-dark">Análisis de Datos</h5>
-                <p class="text-muted">Excel, Power BI, SQL, Python</p>
+    </div>
+
+    <!-- Sección de Habilidades -->
+    <div class="mb-5">
+        <h2 class="text-center mb-4">Habilidades</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <i class="fas fa-database fa-3x text-primary"></i>
+                <h4>SQL</h4>
+                <p>Experto en gestión y optimización de bases de datos relacionales.</p>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="text-center p-4 shadow-lg rounded-3 bg-light">
-                <i class="fas fa-palette fa-3x text-warning mb-3"></i>
-                <h5 class="fw-bold text-dark">Visualización de Datos</h5>
-                <p class="text-muted">Power BI</p>
+            <div class="col-md-4 mb-3">
+                <i class="fas fa-chart-line fa-3x text-success"></i>
+                <h4>Power BI</h4>
+                <p>Creación de dashboards interactivos y visualizaciones personalizadas.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <i class="fas fa-code fa-3x text-warning"></i>
+                <h4>Python</h4>
+                <p>Dominio en análisis de datos, limpieza y transformación de datos.</p>
+            </div>
+            <!-- Nuevas habilidades -->
+            <div class="col-md-4 mb-3">
+                <i class="fab fa-python fa-3x text-info"></i>
+                <h4>Django Framework</h4>
+                <p>Desarrollo de aplicaciones web robustas con el framework Django.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <i class="fas fa-database fa-3x text-danger"></i>
+                <h4>MySQL</h4>
+                <p>Gestión y optimización de bases de datos con MySQL.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <i class="fas fa-table fa-3x text-muted"></i>
+                <h4>Excel</h4>
+                <p>Dominio avanzado en la creación de hojas de cálculo y análisis de datos.</p>
             </div>
         </div>
     </div>
-</section>
 
     <!-- Sección de Certificaciones -->
-    <section class="mb-5">
-        <h2 class="text-center fw-bold mb-4">Certificaciones</h2>
-        <div class="row g-4">
+    <div class="mb-5">
+        <h2 class="text-center mb-4">Certificaciones</h2>
+        <div class="row">
             {% for cert in certifications %}
-            <div class="col-lg-4 col-md-6">
-                <div class="card shadow-lg border-0 h-100 rounded-4">
-                    <div class="card-body">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body d-flex flex-column">
                         <div class="d-flex align-items-center mb-3">
-                            <i class="fas fa-medal fa-2x text-warning me-3"></i>
-                            <h5 class="card-title mb-0">{{ cert.name }}</h5>
+                            <i class="fas fa-medal fa-2x text-warning mr-3"></i>
+                            <h5 class="card-title">{{ cert.name }}</h5>
                         </div>
-                        <p class="text-muted mb-2">Institución: {{ cert.institution }}</p>
-                        <p class="text-muted mb-4">Año: {{ cert.year }}</p>
-                        <a href="{{ cert.certificate_file.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Ver Certificado</a>
+                        <p class="card-text">Institución: {{ cert.institution }}</p>
+                        <p class="card-text">Año: {{ cert.year }}</p>
+                        <a href="{{ cert.certificate_file.url }}" target="_blank" class="btn btn-primary mt-auto">Ver Certificado</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-    </section>
+    </div>
 
-    <!-- Sección de Experiencia -->
-    <section class="py-5 text-center bg-light rounded shadow">
-        <h2 class="display-6 fw-bold">Más de <span class="text-primary">3 años</span> de experiencia</h2>
-        <p class="fs-5 text-muted">Transformando datos en soluciones estratégicas para diversas industrias.</p>
-    </section>
+    <!-- Sección de Años de Experiencia -->
+    <div class="bg-light py-5 text-center shadow">
+        <h2 class="mb-4">Más de <span class="text-primary">5 años</span> de experiencia en análisis de datos</h2>
+        <p class="lead">Transformando datos en soluciones estratégicas para diversas industrias.</p>
+    </div>
 </div>
 
 <style>
-    /* Estilos generales */
-    body {
+    /* Estilos para la página Sobre Mí */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    h1, h2 {
         font-family: 'Poppins', sans-serif;
     }
 
-    h1, h2, h5 {
-        color: #333;
+    .lead {
+        font-size: 1.2rem;
+        color: #555;
     }
 
-    .text-primary {
-        color: #0d6efd !important;
+    .bg-light {
+        background-color: #f8f9fa !important;
+        border-radius: 10px;
     }
 
-    .text-muted {
-        color: #6c757d !important;
-    }
-
-    .shadow {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .shadow-lg {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .rounded {
-        border-radius: 8px !important;
-    }
-
-    .rounded-4 {
-        border-radius: 12px !important;
-    }
-
-    .rounded-circle {
-        border-radius: 50% !important;
-    }
-
-    .btn {
-        transition: background-color 0.3s ease;
-    }
-
-    .btn:hover {
-        background-color: #0056b3 !important;
-    }
-
-    /* Estilo de sección de habilidades */
-    .fa-3x {
-        font-size: 2rem;
-    }
-
-    /* Certificaciones */
     .card {
-        border-radius: 12px;
-        transition: transform 0.3s ease;
+        border: none;
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
     }
 
     .card:hover {
-        transform: translateY(-5px);
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .text-success {
+        color: #28a745 !important;
+    }
+
+    .text-warning {
+        color: #ffc107 !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    /* Estilos para la sección de Certificaciones */
+    .card {
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .card-title {
@@ -174,10 +163,43 @@
         font-weight: bold;
     }
 
-    /* Sección de experiencia */
-    .bg-light {
-        background-color: #f8f9fa !important;
+    .card-text {
+        color: #555;
+    }
+
+    .card .btn {
+        align-self: flex-start;
+        transition: background-color 0.3s;
+    }
+
+    .card .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .text-warning {
+        color: #ffc107 !important;
+    }
+
+    .fa-medal {
+        margin-right: 10px;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .fa-medal {
+            margin-right: 5px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+        }
     }
 </style>
 {% endblock %}
-

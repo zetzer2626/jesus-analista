@@ -1,29 +1,23 @@
-from pathlib import Path
-from dotenv import load_dotenv
+"""
+Django settings for portafolio project configured for deployment on Render.
+"""
+
 import os
+from pathlib import Path
 import dj_database_url
-from urllib.parse import urlparse
 
-# Cargar variables de entorno
-load_dotenv()
-
-# BASE_DIR
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY (cargado desde variables de entorno)
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-ur1s#$3bs%e%_6g^rej3m*hw)whwg_u^-mt=v085$d2g5xaunh')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-ur1s#$3bs%e%_6g^rej3m*hw)whwg_u^-mt=v085$d2g5xaunh")
 
-# DEBUG (por defecto en False para producción)
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# Hosts permitidos
-ALLOWED_HOSTS = ['localhost', 'primer-portafolio-production.up.railway.app']
+ALLOWED_HOSTS = [os.getenv("RENDER_EXTERNAL_HOSTNAME", "*")]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://primer-portafolio-production.up.railway.app',
-]
-
-# Aplicaciones instaladas
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,14 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'miapp',
-    'whitenoise.runserver_nostatic',
-    'storages',
 ]
 
-# Middlewares
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Middleware para archivos estáticos en producción
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,14 +39,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URL de raíz
 ROOT_URLCONF = 'portafolio.urls'
 
-# Configuración de plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,28 +57,14 @@ TEMPLATES = [
     },
 ]
 
-# WSGI
 WSGI_APPLICATION = 'portafolio.wsgi.application'
 
-# Configuración de la base de datos con Railway
-database_url = os.getenv('DATABASE_URL')
-url = urlparse(database_url)
-
+# Database configuration for Render PostgreSQL
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': url.path[1:],
-        'USER': url.username,
-        'PASSWORD': url.password,
-        'HOST': url.hostname,
-        'PORT': url.port,
-        'OPTIONS': {
-            'sslmode': 'require',
-        }
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL", "sqlite:///" + str(BASE_DIR / "db.sqlite3")))
 }
 
-# Validaciones de contraseñas
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -97,26 +72,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Configuración de internacionalización
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Configuración de archivos estáticos con WhiteNoise
+# Static files settings
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'miapp/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Configuración de Dropbox para almacenamiento de archivos multimedia
-DROPBOX_OAUTH2_TOKEN = os.getenv('DROPBOX_OAUTH2_TOKEN')
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DROPBOX_ROOT_PATH = '/media/'
+# Media files
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# Configuración para Railway
-WHITENOISE_USE_FINDERS = True
-
-# Primary Key por defecto
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
