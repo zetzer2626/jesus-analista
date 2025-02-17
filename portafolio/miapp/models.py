@@ -21,10 +21,16 @@ class Project(models.Model):
     img_3 = models.ImageField(upload_to='projects/', blank=True, null=True)
     img_4 = models.ImageField(upload_to='projects/', blank=True, null=True)
     img_5 = models.ImageField(upload_to='projects/', blank=True, null=True)
+    img_6 = models.ImageField(upload_to='projects/', blank=True, null=True)
+    img_7 = models.ImageField(upload_to='projects/', blank=True, null=True)
+    img_8 = models.ImageField(upload_to='projects/', blank=True, null=True)
+    img_9 = models.ImageField(upload_to='projects/', blank=True, null=True)
+    img_10 = models.ImageField(upload_to='projects/', blank=True, null=True)
     categorias = models.ManyToManyField(Categoria, related_name='projects')
      # Campos de video
     video_file = models.FileField(upload_to='projects/videos/', blank=True, null=True)  # Para subir videos
-    video_url = models.URLField(max_length=200, blank=True, null=True)  # Para vincular videos externos
+    video_url = models.URLField(max_length=500, blank=True, null=True)  # Para vincular videos externos
+    github_url = models.URLField(max_length=500, blank=True, null=True)  # Para vincular Github externos
 
     def __str__(self):
         return self.title
