@@ -66,6 +66,7 @@
     </div>
     {% endfor %}
 </div>
+
 <!-- Paginación -->
 <div class="d-flex justify-content-center mt-4">
     {% if is_paginated %}
@@ -91,10 +92,45 @@
     {% endif %}
 </div>
 
+<!-- Detalle del Proyecto -->
+{% if project_detail %}
+<div class="project-detail mt-5">
+    <h3>{{ project_detail.title }}</h3>
+    <p>{{ project_detail.description }}</p>
+
+    <h4>Imágenes del Proyecto</h4>
+    <div class="row">
+        {% for img in project_detail.get_images %}
+        <div class="col-md-4">
+            <img src="{{ img.url }}" class="img-fluid mb-3" alt="Imagen del proyecto">
+        </div>
+        {% empty %}
+        <p>No hay imágenes disponibles.</p>
+        {% endfor %}
+    </div>
+
+    <h4>Archivos del Proyecto</h4>
+    <ul>
+        {% if project_detail.project_file %}
+        <li><a href="{{ project_detail.project_file.url }}" target="_blank">Descargar Archivos Generales</a></li>
+        {% endif %}
+        {% if project_detail.video_file %}
+        <li><a href="{{ project_detail.video_file.url }}" target="_blank">Ver Video del Proyecto</a></li>
+        {% endif %}
+        {% if project_detail.video_url %}
+        <li><a href="{{ project_detail.video_url }}" target="_blank">Ver Video Externo</a></li>
+        {% endif %}
+        {% if project_detail.github_url %}
+        <li><a href="{{ project_detail.github_url }}" target="_blank">Ver en GitHub</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+
 <style>
     /* General para tarjetas */
 .project-card {
-    height: 100%; /* Asegura que todas las tarjetas sean iguales en altura */
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -154,6 +190,5 @@
     flex-direction: column;
     justify-content: space-between;
 }
-
 </style>
 {% endblock %}
