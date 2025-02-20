@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Project, Categoria
+from .models import Project, Categoria,Certification
+
+admin.site.register(Certification)
+
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -12,3 +15,5 @@ class ProjectAdmin(admin.ModelAdmin):
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
     search_fields = ('nombre',)
+
+admin.site.register(Certification
