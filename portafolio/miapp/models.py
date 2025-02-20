@@ -44,7 +44,7 @@ class Certification(models.Model):
     name = models.CharField(max_length=255)  # Nombre del certificado
     institution = models.CharField(max_length=255)  # Institución que otorga el certificado
     year = models.IntegerField()  # Año de emisión del certificado
-    certificate_file = CloudinaryField(resource_type='raw') # Archivo del certificado (PDF, DOC, etc.)
+    certificate_file = CloudinaryField(resource_type='auto')
 
     def __str__(self):
         return self.name

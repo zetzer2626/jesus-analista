@@ -6,20 +6,36 @@
 
 {% block content %}
 <div class="container">
-    <!-- Sección de Presentación -->
-    <div class="row align-items-center mb-5">
-        <div class="col-md-4 d-flex justify-content-center">
-            <img src="{% static 'img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle shadow-lg" alt="Foto de perfil" style="width: 180px; height: 180px; object-fit: cover;">
-        </div>
-        <div class="col-md-8">
-            <h1 class="mb-3">Jesús Antonio Navarrete Castillo</h1>
-            <p class="lead">
-                Analista de Datos apasionado por transformar datos en conocimiento accionable. Con experiencia en Python, SQL, Excel, Power BI, y la creación de visualizaciones impactantes, ayudo a las organizaciones a tomar decisiones informadas.
-            </p>
-            <p class="text-muted">Este software ha sido desarrollado con Python y Django, desplegado en Railway y alojado en la nube de Cloudity para garantizar escalabilidad y rendimiento.</p>
-            <a href="{% url 'project_list' %}" class="btn btn-primary mt-3">Explora Mis Proyectos</a>
-        </div>
+<!-- Sección de Presentación Mejorada -->
+<div class="row align-items-center mb-5 p-4 bg-light rounded shadow">
+    <!-- Imagen de perfil -->
+    <div class="col-md-4 text-center">
+        <img src="{% static 'img/jesus_perfil.jpeg' %}" 
+             class="img-fluid rounded-circle shadow-lg border border-3 border-primary"
+             alt="Foto de perfil" 
+             style="width: 200px; height: 200px; object-fit: cover;">
     </div>
+
+    <!-- Texto de presentación -->
+    <div class="col-md-8">
+        <h1 class="mb-3 fw-bold text-primary">Jesús Antonio Navarrete Castillo</h1>
+        <p class="lead text-dark fw-medium">
+            Analista de Datos apasionado por transformar datos en conocimiento accionable. Con experiencia en 
+            <span class="fw-bold text-primary">Python, SQL, Excel, Power BI</span> y la creación de visualizaciones impactantes, 
+            ayudo a las organizaciones a tomar decisiones informadas.
+        </p>
+        <p class="text-muted fst-italic">
+            Este software ha sido desarrollado con <span class="fw-bold">Python y Django</span>, desplegado en 
+            <span class="fw-bold">Railway</span> y alojado en <span class="fw-bold">Cloudity</span> para garantizar escalabilidad y rendimiento.
+        </p>
+
+        <!-- Botón mejorado -->
+        <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow-sm">
+            🚀 Explora Mis Proyectos
+        </a>
+    </div>
+</div>
+
 
 
     <!-- Sección de Habilidades -->
