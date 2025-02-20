@@ -3,7 +3,6 @@ from .models import Project, Categoria,Certification
 
 admin.site.register(Certification)
 
-
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_at')
@@ -15,5 +14,3 @@ class ProjectAdmin(admin.ModelAdmin):
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
     search_fields = ('nombre',)
-
-admin.site.register(Certification
