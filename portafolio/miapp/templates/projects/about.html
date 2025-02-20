@@ -12,13 +12,15 @@
             <img src="{% static 'img/jesus_perfil.jpeg' %}" class="img-fluid rounded-circle shadow-lg" alt="Foto de perfil" style="width: 180px; height: 180px; object-fit: cover;">
         </div>
         <div class="col-md-8">
-            <h1 class="mb-3">Hola, soy Jesús Antonio Navarrete Castillo</h1>
+            <h1 class="mb-3">Jesús Antonio Navarrete Castillo</h1>
             <p class="lead">
                 Analista de Datos apasionado por transformar datos en conocimiento accionable. Con experiencia en Python, SQL, Excel, Power BI, y la creación de visualizaciones impactantes, ayudo a las organizaciones a tomar decisiones informadas.
             </p>
+            <p class="text-muted">Este software ha sido desarrollado con Python y Django, desplegado en Railway y alojado en la nube de Cloudity para garantizar escalabilidad y rendimiento.</p>
             <a href="{% url 'project_list' %}" class="btn btn-primary mt-3">Explora Mis Proyectos</a>
         </div>
     </div>
+
 
     <!-- Sección de Habilidades -->
     <div class="mb-5">
@@ -27,7 +29,7 @@
             <div class="col-md-4 mb-3">
                 <i class="fas fa-database fa-3x text-primary"></i>
                 <h4>SQL</h4>
-                <p>Experto en gestión y optimización de bases de datos relacionales.</p>
+                <p>gestión y optimización de bases de datos relacionales.</p>
             </div>
             <div class="col-md-4 mb-3">
                 <i class="fas fa-chart-line fa-3x text-success"></i>
@@ -43,7 +45,7 @@
             <div class="col-md-4 mb-3">
                 <i class="fab fa-python fa-3x text-info"></i>
                 <h4>Django Framework</h4>
-                <p>Desarrollo de aplicaciones web robustas con el framework Django.</p>
+                <p>Desarrollo de aplicaciones con el framework Django.</p>
             </div>
             <div class="col-md-4 mb-3">
                 <i class="fas fa-database fa-3x text-danger"></i>
@@ -55,28 +57,6 @@
                 <h4>Excel</h4>
                 <p>Dominio avanzado en la creación de hojas de cálculo y análisis de datos.</p>
             </div>
-        </div>
-    </div>
-
-    <!-- Sección de Certificaciones -->
-    <div class="mb-5">
-        <h2 class="text-center mb-4">Certificaciones</h2>
-        <div class="row">
-            {% for cert in certifications %}
-            <div class="col-md-6 mb-4">
-                <div class="card shadow h-100">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fas fa-medal fa-2x text-warning mr-3"></i>
-                            <h5 class="card-title">{{ cert.name }}</h5>
-                        </div>
-                        <p class="card-text">Institución: {{ cert.institution }}</p>
-                        <p class="card-text">Año: {{ cert.year }}</p>
-                        <a href="{{ cert.certificate_file.url }}" target="_blank" class="btn btn-primary mt-auto">Ver Certificado</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
         </div>
     </div>
 
