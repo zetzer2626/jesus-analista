@@ -1,3 +1,43 @@
-env
-__pycache__
+# Base de datos SQLite (desarrollo local)
 db.sqlite3
+*.sqlite3
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Archivos de Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos multimedia locales
+media/
+
+# Archivos estáticos compilados
+staticfiles/
+static_collected/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/

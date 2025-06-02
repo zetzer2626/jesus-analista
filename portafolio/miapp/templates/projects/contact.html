@@ -1,152 +1,207 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% block title %}Contacto{% endblock %}
+{% block title %}Contacto - Jesús Navarrete{% endblock %}
+
+{% block meta_description %}
+Ponte en contacto conmigo para proyectos de análisis de datos y desarrollo web. Información de contacto y redes sociales.
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
 
 {% block content %}
-<section class="contact-section">
+<!-- Hero Section -->
+<section class="contact-hero">
+    <div class="hero-background"></div>
     <div class="container">
-        <h2 class="text-primary mb-4">Contacto</h2>
-        <p class="lead mb-5">Si tienes alguna consulta o deseas más información, no dudes en contactarme a través de los siguientes medios.</p>
-
-        <!-- Contacto por correo -->
-        <div class="contact-info">
-            <div class="contact-item">
-                <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
-                <p><strong>Correo electrónico:</strong></p>
-                <a href="mailto:{{ email }}" class="contact-link">{{ email }}</a>
+        <div class="hero-content" data-aos="fade-up">
+            <h1 class="hero-title">¡Conectemos!</h1>
+            <p class="hero-subtitle">¿Tienes un proyecto en mente? Me encantaría escucharte</p>
+            <div class="hero-cta">
+                <a href="mailto:jnavarrete2626@gmail.com" class="cta-button primary">
+                    <i class="fas fa-envelope me-2"></i>
+                    Enviar Email
+                </a>
+                <a href="https://linkedin.com/in/jesus-navarrete" class="cta-button secondary" target="_blank">
+                    <i class="fab fa-linkedin me-2"></i>
+                    Ver LinkedIn
+                </a>
             </div>
-        </div>
-
-        <!-- Opcional: Agregar teléfono -->
-        <!-- <div class="contact-info">
-            <div class="contact-item">
-                <i class="fas fa-phone-alt fa-3x text-primary mb-3"></i>
-                <p><strong>Teléfono:</strong></p>
-                <a href="tel:{{ phone }}" class="contact-link">{{ phone }}</a>
-            </div>
-        </div> -->
-
-        <!-- Redes Sociales (opcional) -->
-        <div class="social-links mt-4">
-            <p class="mb-3"><strong>Redes Sociales:</strong></p>
-            <a href="#" class="social-icon text-primary mx-2">
-                <i class="fab fa-facebook fa-2x"></i>
-            </a>
-            <a href="#" class="social-icon text-primary mx-2">
-                <i class="fab fa-twitter fa-2x"></i>
-            </a>
-            <a href="#" class="social-icon text-primary mx-2">
-                <i class="fab fa-linkedin fa-2x"></i>
-            </a>
         </div>
     </div>
 </section>
 
-<style>
-    .contact-section {
-        background-color: #f8f9fa;
-        padding: 60px 0;
-        text-align: center;
-        border-top: 4px solid #007bff;
-        animation: fadeIn 1s ease-in-out;
-    }
+<!-- Main Contact Section -->
+<main class="contact-main">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Contact Information -->
+            <div class="col-lg-8">
+                <div class="contact-info-card" data-aos="fade-up">
+                    <h2 class="section-title">
+                        <i class="fas fa-address-card me-3"></i>
+                        Información de Contacto
+                    </h2>
+                    
+                    <div class="contact-grid">
+                        <!-- Email -->
+                        <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="contact-icon email">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h3>Email Principal</h3>
+                                <a href="mailto:jnavarrete2626@gmail.com" class="contact-link">
+                                    jnavarrete2626@gmail.com
+                                </a>
+                                <p class="contact-note">Respuesta garantizada en 24 horas</p>
+                            </div>
+                        </div>
 
-    .contact-section h2 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #007bff;
-        margin-bottom: 30px;
-        animation: slideIn 1s ease-in-out;
-    }
+                        <!-- Location -->
+                        <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="contact-icon location">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h3>Ubicación</h3>
+                                <p class="contact-text">Iquique, Chile</p>
+                                <p class="contact-note">Trabajo remoto disponible globalmente</p>
+                            </div>
+                        </div>
 
-    .contact-section p {
-        font-size: 1.2rem;
-        margin-bottom: 30px;
-        color: #555;
-    }
+                        <!-- Schedule -->
+                        <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="contact-icon schedule">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h3>Horario de Disponibilidad</h3>
+                                <p class="contact-text">Lunes a Viernes: 9:00 - 18:00</p>
+                                <p class="contact-note">Zona horaria: GMT-3 (Chile)</p>
+                            </div>
+                        </div>
 
-    .contact-info {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin-bottom: 40px;
-    }
+                        <!-- Response Time -->
+                        <div class="contact-item" data-aos="fade-up" data-aos-delay="400">
+                            <div class="contact-icon response">
+                                <i class="fas fa-reply"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h3>Tiempo de Respuesta</h3>
+                                <p class="contact-text">Máximo 24 horas</p>
+                                <p class="contact-note">Consultas urgentes en el mismo día</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    .contact-item {
-        margin-bottom: 20px;
-        padding: 25px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 450px;
-        width: 100%;
-        transition: transform 0.3s ease;
-    }
+            <!-- Quick Actions & Social -->
+            <div class="col-lg-4">
+                <!-- Quick Contact -->
+                <div class="quick-contact-card" data-aos="fade-up" data-aos-delay="500">
+                    <h3 class="card-title">
+                        <i class="fas fa-rocket me-2"></i>
+                        Contacto Rápido
+                    </h3>
+                    
+                    <div class="quick-actions">
+                        <a href="mailto:jnavarrete2626@gmail.com" class="quick-action email-action">
+                            <div class="action-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="action-content">
+                                <h4>Enviar Email</h4>
+                                <p>Directo a mi bandeja</p>
+                            </div>
+                            <i class="fas fa-arrow-right action-arrow"></i>
+                        </a>
 
-    .contact-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
+                        <a href="#" class="quick-action phone-action">
+                            <div class="action-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="action-content">
+                                <h4>Llamar</h4>
+                                <p>Para consultas urgentes</p>
+                            </div>
+                            <i class="fas fa-arrow-right action-arrow"></i>
+                        </a>
 
-    .contact-item i {
-        color: #007bff;
-    }
+                        <a href="#" class="quick-action whatsapp-action" target="_blank">
+                            <div class="action-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="action-content">
+                                <h4>WhatsApp</h4>
+                                <p>Mensaje directo</p>
+                            </div>
+                            <i class="fas fa-arrow-right action-arrow"></i>
+                        </a>
+                    </div>
+                </div>
 
-    .contact-link {
-        font-size: 1.25rem;
-        color: #007bff;
-        text-decoration: none;
-        font-weight: bold;
-    }
+                <!-- Social Networks -->
+                <div class="social-card" data-aos="fade-up" data-aos-delay="600">
+                    <h3 class="card-title">
+                        <i class="fas fa-share-alt me-2"></i>
+                        Redes Sociales
+                    </h3>
+                    
+                    <div class="social-grid">
+                        <a href="https://www.linkedin.com/in/jesus-antonio-navarrete-castillo-57b807240/" 
+                           class="social-link linkedin" 
+                           target="_blank" 
+                           data-platform="LinkedIn">
+                            <div class="social-icon">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                            <div class="social-info">
+                                <h4>LinkedIn</h4>
+                                <p>Perfil profesional</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    .contact-link:hover {
-        text-decoration: underline;
-    }
+        <!-- Call to Action Section -->
+        <div class="cta-section" data-aos="fade-up" data-aos-delay="700">
+            <div class="cta-content">
+                <h2 class="cta-title">¿Listo para comenzar tu proyecto?</h2>
+                <p class="cta-description">
+                    Especializado en análisis de datos y desarrollo web. 
+                    Transformo ideas en soluciones digitales efectivas.
+                </p>
+                <div class="cta-buttons">
+                    <a href="mailto:jnavarrete2626@gmail.com?subject=Nuevo%20Proyecto&body=Hola%20Jesús,%0A%0AMe%20gustaría%20discutir%20un%20proyecto%20contigo.%0A%0ADetalles:%0A-%20Tipo%20de%20proyecto:%0A-%20Presupuesto%20estimado:%0A-%20Fecha%20límite:%0A%0ASaludos!" 
+                       class="cta-btn primary">
+                        <i class="fas fa-rocket me-2"></i>
+                        Iniciar Proyecto
+                    </a>
+                    <a href="{% url 'project_list' %}" class="cta-btn secondary">
+                        <i class="fas fa-eye me-2"></i>
+                        Ver Portafolio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
-    .social-links {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+<!-- Availability Status -->
+<div class="availability-status" id="availabilityStatus">
+    <div class="status-indicator">
+        <div class="status-dot available"></div>
+        <span class="status-text">Disponible para nuevos proyectos</span>
+    </div>
+</div>
+{% endblock %}
 
-    .social-icon {
-        color: #007bff;
-        transition: color 0.3s ease;
-    }
-
-    .social-icon:hover {
-        color: #0056b3;
-    }
-
-    @media (max-width: 768px) {
-        .contact-item {
-            width: 100%;
-            max-width: none;
-        }
-    }
-
-    /* Animaciones */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translateX(-100%);
-        }
-        to {
-            transform: translateX(0);
-        }
-    }
-</style>
-
+{% block extra_js %}
+<script src="{% static 'js/contact.js' %}"></script>
 {% endblock %}

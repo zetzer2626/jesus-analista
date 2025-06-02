@@ -3,7 +3,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Project,Certification,Categoria
 from .forms import ProjectForm
 from django.views.generic import TemplateView
-from django.db.models import Q
+from django.db.models import Q, Count
+from django.utils import timezone
 
 class CategoriaListView(ListView):
     model = Categoria
@@ -48,26 +49,52 @@ class ProjectListView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=keyword) | Q(description__icontains=keyword)
             )
-            
+
         # Ordenar por criterio (por defecto, por fecha de creación)
-        order = self.request.GET.get('order', 'created_at')
-        return queryset.order_by(order)
+        order = self.request.GET.get('order', '-created_at')  # Cambié a descendente
+        return queryset.distinct().order_by(order)  # Agregué distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Agregar las categorías al contexto
-        context['categories'] = Categoria.objects.all()
+        # NUEVO: Obtener el queryset filtrado para contar total
+        filtered_queryset = self.get_queryset()
+        
+        # Agregar las categorías al contexto con conteo
+        context['categories'] = Categoria.objects.annotate(
+            project_count=Count('projects', distinct=True)
+        ).all()
+
+        # NUEVO: Agregar conteo total de proyectos filtrados
+        context['total_projects'] = filtered_queryset.count()
+        
+        # NUEVO: Obtener nombre de categoría seleccionada
+        categoria_name = ''
+        categoria_id = self.request.GET.get('categoria_id')
+        if categoria_id:
+            try:
+                categoria = Categoria.objects.get(id=categoria_id)
+                categoria_name = categoria.nombre
+            except Categoria.DoesNotExist:
+                pass
 
         # Agregar valores actuales de los filtros para mantener el estado en el formulario
         context['current_filters'] = {
             'categoria_id': self.request.GET.get('categoria_id', ''),
+            'categoria_name': categoria_name,  # NUEVO
             'keyword': self.request.GET.get('keyword', ''),
             'start_date': self.request.GET.get('start_date', ''),
             'end_date': self.request.GET.get('end_date', ''),
             'is_published': self.request.GET.get('is_published', ''),
-            'order': self.request.GET.get('order', 'created_at'),
+            'order': self.request.GET.get('order', '-created_at'),
         }
+
+        # NUEVO: Agregar año actual y estado de filtros
+        context['current_year'] = timezone.now().year
+        context['has_filters'] = bool(
+            self.request.GET.get('categoria_id') or 
+            self.request.GET.get('keyword')
+        )
 
         return context
 

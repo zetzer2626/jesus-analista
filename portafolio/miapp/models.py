@@ -41,10 +41,10 @@ class Project(models.Model):
 
 
 class Certification(models.Model):
-    name = models.CharField(max_length=255)  # Nombre del certificado
-    institution = models.CharField(max_length=255)  # Institución que otorga el certificado
-    year = models.IntegerField()  # Año de emisión del certificado
-    certificate_file = CloudinaryField(resource_type='auto')
-
+    name = models.CharField(max_length=255)
+    institution = models.CharField(max_length=255)
+    year = models.IntegerField()
+    certificate_file = CloudinaryField(resource_type='raw')  # Cambiar a 'raw' para PDFs
+    
     def __str__(self):
         return self.name

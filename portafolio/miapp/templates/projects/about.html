@@ -1,201 +1,1041 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% block title %}Sobre Mí{% endblock %}
+{% block title %}Sobre Mí - Jesús Navarrete{% endblock %}
+
+{% block meta_description %}Conoce a Jesús Navarrete, Analista de Datos y Desarrollador Python especializado en Django, análisis de datos y desarrollo de software{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ===== ABOUT PAGE SPECIFIC STYLES ===== */
+.hero-about {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
+                url('{% static "images/data-bg.jpg" %}') center/cover;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    position: relative;
+    margin: -2rem -15px 0 -15px;
+    overflow: hidden;
+}
+
+.hero-about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.profile-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 3rem;
+    margin: 3rem 0;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-bs-theme="dark"] .profile-section {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+}
+
+.profile-image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid white;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.profile-image:hover {
+    transform: scale(1.05) rotate(5deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.profile-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-image-container::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+    z-index: -1;
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.typing-effect {
+    overflow: hidden;
+    border-right: 3px solid var(--primary);
+    white-space: nowrap;
+    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+    display: inline-block;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary); }
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.skill-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-bs-theme="dark"] .skill-card {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.skill-card:hover::before {
+    left: 100%;
+}
+
+.skill-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.skill-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.skill-card:hover .skill-icon {
+    transform: scale(1.2) rotateY(180deg);
+}
+
+.skill-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+[data-bs-theme="dark"] .skill-title {
+    color: var(--light);
+}
+
+.skill-description {
+    color: var(--secondary-color);
+    line-height: 1.6;
+}
+
+.experience-section {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 4rem 0;
+    border-radius: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin: 4rem 0;
+}
+
+.experience-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 4rem auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gradient-primary);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    width: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+    padding-right: 3rem;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+    padding-left: 3rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+}
+
+.timeline-item:nth-child(odd) .timeline-marker {
+    right: -13px;
+}
+
+.timeline-item:nth-child(even) .timeline-marker {
+    left: -13px;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .timeline-content {
+    background: rgba(30, 41, 59, 0.95);
+}
+
+.timeline-content:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.cta-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 3rem;
+    text-align: center;
+    margin: 4rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-elements span {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float-up 10s infinite linear;
+    border-radius: 50%;
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateY(100vh) scale(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1);
+    }
+}
+
+.floating-elements span:nth-child(1) {
+    left: 10%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.floating-elements span:nth-child(2) {
+    left: 20%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.floating-elements span:nth-child(3) {
+    left: 25%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.floating-elements span:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.floating-elements span:nth-child(5) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.floating-elements span:nth-child(6) {
+    left: 80%;
+    width: 120px;
+    height: 120px;
+    animation-delay: 3s;
+    animation-duration: 15s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-about {
+        min-height: 40vh;
+        margin: -1rem -15px 0 -15px;
+    }
+    
+    .profile-section {
+        padding: 2rem;
+        border-radius: 20px;
+        margin: 2rem 0;
+    }
+    
+    .profile-image {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        text-align: left !important;
+        padding-left: 4rem !important;
+        padding-right: 0 !important;
+    }
+    
+    .timeline-marker {
+        left: 21px !important;
+        right: auto !important;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .stat-item {
+        padding: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-section {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+    
+    .experience-section {
+        padding: 3rem 0;
+        border-radius: 20px;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container">
-<!-- Sección de Presentación Mejorada -->
-<div class="row align-items-center mb-5 p-4 bg-light rounded shadow">
-    <!-- Imagen de perfil -->
-    <div class="col-md-4 text-center">
-        <img src="{% static 'img/jesus_perfil.jpeg' %}" 
-             class="img-fluid rounded-circle shadow-lg border border-3 border-primary"
-             alt="Foto de perfil" 
-             style="width: 200px; height: 200px; object-fit: cover;">
+<!-- Hero Section -->
+<section class="hero-about" data-aos="fade-down">
+    <div class="floating-elements">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-
-    <!-- Texto de presentación -->
-    <div class="col-md-8">
-        <h1 class="mb-3 fw-bold text-primary">Jesús Antonio Navarrete Castillo</h1>
-        <p class="lead text-dark fw-medium">
-            Analista de Datos apasionado por transformar datos en conocimiento accionable. Con experiencia en 
-            <span class="fw-bold text-primary">Python, SQL, Excel, Power BI</span> y la creación de visualizaciones impactantes, 
-            ayudo a las organizaciones a tomar decisiones informadas.
-        </p>
-        <p class="text-muted fst-italic">
-            Este software ha sido desarrollado con <span class="fw-bold">Python y Django</span>, desplegado en 
-            <span class="fw-bold">Railway</span> y alojado en <span class="fw-bold">Cloudity</span> para garantizar escalabilidad y rendimiento.
-        </p>
-
-        <!-- Botón mejorado -->
-        <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg mt-3 shadow-sm">
-            🚀 Explora Mis Proyectos
-        </a>
-    </div>
-</div>
-
-
-
-    <!-- Sección de Habilidades -->
-    <div class="mb-5">
-        <h2 class="text-center mb-4">Habilidades</h2>
-        <div class="row text-center">
-            <div class="col-md-4 mb-3">
-                <i class="fas fa-database fa-3x text-primary"></i>
-                <h4>SQL</h4>
-                <p>gestión y optimización de bases de datos relacionales.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <i class="fas fa-chart-line fa-3x text-success"></i>
-                <h4>Power BI</h4>
-                <p>Creación de dashboards interactivos y visualizaciones personalizadas.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <i class="fas fa-code fa-3x text-warning"></i>
-                <h4>Python</h4>
-                <p>Dominio en análisis de datos, limpieza y transformación de datos.</p>
-            </div>
-            <!-- Nuevas habilidades -->
-            <div class="col-md-4 mb-3">
-                <i class="fab fa-python fa-3x text-info"></i>
-                <h4>Django Framework</h4>
-                <p>Desarrollo de aplicaciones con el framework Django.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <i class="fas fa-database fa-3x text-danger"></i>
-                <h4>MySQL</h4>
-                <p>Gestión y optimización de bases de datos con MySQL.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <i class="fas fa-table fa-3x text-muted"></i>
-                <h4>Excel</h4>
-                <p>Dominio avanzado en la creación de hojas de cálculo y análisis de datos.</p>
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-3 fw-bold mb-4 text-shadow">
+                    <span class="typing-effect">Hola, soy Jesús Navarrete</span>
+                </h1>
+                <p class="lead mb-4 fs-4">
+                    <strong>Analista de Datos & Desarrollador Python</strong>
+                </p>
+                <p class="fs-5 mb-4">
+                    Transformo datos en conocimiento accionable y desarrollo software innovador con Python y Django
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{% url 'project_list' %}" class="btn btn-light btn-lg rounded-pill px-4">
+                        <i class="fas fa-folder-open me-2"></i>Ver Proyectos
+                    </a>
+                    <a href="{% url 'contacto' %}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        <i class="fas fa-envelope me-2"></i>Contactarme
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Sección de Años de Experiencia -->
-    <div class="bg-light py-5 text-center shadow">
-        <h2 class="mb-4">Más de <span class="text-primary">5 años</span> de experiencia en análisis de datos</h2>
-        <p class="lead">Transformando datos en soluciones estratégicas para diversas industrias.</p>
+<!-- Profile Section -->
+<section class="profile-section" data-aos="fade-up">
+    <div class="row align-items-center">
+        <!-- Profile Image -->
+        <div class="col-lg-4 text-center mb-4 mb-lg-0">
+            <div class="profile-image-container" data-aos="zoom-in" data-aos-delay="200">
+                <img src="{% static 'img/jesus_perfil.jpeg' %}" 
+                     class="profile-image" 
+                     alt="Jesús Antonio Navarrete Castillo">
+            </div>
+        </div>
+        
+        <!-- Profile Content -->
+        <div class="col-lg-8" data-aos="fade-left" data-aos-delay="300">
+            <h2 class="display-5 fw-bold mb-3 text-gradient">
+                Jesús Antonio Navarrete Castillo
+            </h2>
+            <p class="lead mb-4">
+                <strong>Analista de Datos</strong> especializado en la transformación de información compleja en 
+                insights estratégicos que impulsan la toma de decisiones empresariales.
+            </p>
+            <p class="mb-4">
+                Con experiencia sólida en <span class="badge bg-primary mx-1">Python</span>
+                <span class="badge bg-success mx-1">SQL</span>
+                <span class="badge bg-info mx-1">Power BI</span>
+                <span class="badge bg-warning mx-1">Excel</span>, 
+                me enfoco en crear soluciones de análisis de datos que generen valor real para las organizaciones.
+            </p>
+            <div class="alert alert-info border-0 mb-4" style="background: rgba(59, 130, 246, 0.1);">
+                <i class="fas fa-code me-2"></i>
+                <strong>Desarrollo de Software:</strong> También desarrollo aplicaciones web robustas y escalables 
+                utilizando <strong>Python con Django Framework</strong>, desplegadas en plataformas cloud como 
+                <strong>Railway</strong> con almacenamiento en <strong>Cloudinary</strong> para garantizar 
+                rendimiento y escalabilidad óptimos.
+            </div>
+            <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg rounded-pill px-4 me-3">
+                <i class="fas fa-rocket me-2"></i>Explora Mis Proyectos
+            </a>
+        </div>
     </div>
-</div>
+</section>
 
-<style>
-    /* Estilos para la página Sobre Mí */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
+<!-- Skills Section -->
+<section class="py-5">
+    <div class="text-center mb-5" data-aos="fade-up">
+        <h2 class="display-4 fw-bold mb-3">Habilidades Técnicas</h2>
+        <p class="lead text-muted">Tecnologías y herramientas que domino para crear soluciones innovadoras</p>
+    </div>
+    
+    <div class="skills-grid">
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="skill-icon text-primary">
+                <i class="fab fa-python"></i>
+            </div>
+            <h3 class="skill-title">Python</h3>
+            <p class="skill-description">
+                Desarrollo con pandas, numpy, matplotlib, seaborn para análisis de datos. 
+                Django para aplicaciones web escalables.
+            </p>
+        </div>
+        
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="skill-icon text-success">
+                <i class="fas fa-database"></i>
+            </div>
+            <h3 class="skill-title">SQL & Bases de Datos</h3>
+            <p class="skill-description">
+                Gestión y optimización de bases de datos relacionales. 
+                Consultas complejas, procedimientos almacenados y optimización de rendimiento.
+            </p>
+        </div>
+        
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="skill-icon text-warning">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="skill-title">Power BI</h3>
+            <p class="skill-description">
+                Creación de dashboards interactivos, modelado de datos y 
+                visualizaciones personalizadas para análisis empresarial.
+            </p>
+        </div>
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="skill-icon text-info">
+                <i class="fas fa-code"></i>
+            </div>
+            <h3 class="skill-title">Django Framework</h3>
+            <p class="skill-description">
+                Desarrollo de aplicaciones web completas con Django. 
+                APIs REST, autenticación, ORM y despliegue en producción.
+            </p>
+        </div>
+        
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="skill-icon text-danger">
+                <i class="fas fa-database"></i>
+            </div>
+            <h3 class="skill-title">MySQL</h3>
+            <p class="skill-description">
+                Administración de bases de datos MySQL. Diseño de esquemas, 
+                optimización de consultas y mantenimiento de sistemas.
+            </p>
+        </div>
+        
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="600">
+            <div class="skill-icon text-secondary">
+                <i class="fas fa-table"></i>
+            </div>
+            <h3 class="skill-title">Excel Avanzado</h3>
+            <p class="skill-description">
+                Dominio avanzado en Excel con VBA, tablas dinámicas, 
+                funciones complejas y automatización de procesos.
+            </p>
+        </div>
+    </div>
+</section>
 
-    h1, h2 {
-        font-family: 'Poppins', sans-serif;
-    }
+<!-- Experience Section -->
+<section class="experience-section" data-aos="fade-up">
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="text-center">
+            <h2 class="display-4 fw-bold mb-4">Mi Trayectoria</h2>
+            <p class="lead mb-5">Transformando datos en soluciones estratégicas</p>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                <span class="stat-number" data-count="5">0</span>
+                <span class="stat-label">Años de Experiencia</span>
+            </div>
+            <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                <span class="stat-number" data-count="50">0</span>
+                <span class="stat-label">Proyectos Completados</span>
+            </div>
+            <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                <span class="stat-number" data-count="10">0</span>
+                <span class="stat-label">Tecnologías Dominadas</span>
+            </div>
+            <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+                <span class="stat-number" data-count="100">0</span>
+                <span class="stat-label">% Satisfacción Cliente</span>
+            </div>
+        </div>
+    </div>
+</section>
 
-    .lead {
-        font-size: 1.2rem;
-        color: #555;
-    }
+<!-- Timeline Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-4 fw-bold mb-3">Mi Recorrido Profesional</h2>
+            <p class="lead text-muted">Hitos importantes en mi carrera como analista de datos</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h4 class="fw-bold text-primary">2024 - Presente</h4>
+                    <h5>Analista de Datos Senior</h5>
+                    <p>Liderando proyectos de análisis de datos complejos y desarrollo de software con Python Django. 
+                       Implementación de soluciones de BI y automatización de procesos.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h4 class="fw-bold text-primary">2022 - 2024</h4>
+                    <h5>Desarrollador Python & Analista</h5>
+                    <p>Especialización en Django Framework para desarrollo web. Creación de dashboards 
+                       interactivos y sistemas de gestión de datos empresariales.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h4 class="fw-bold text-primary">2020 - 2022</h4>
+                    <h5>Analista de Datos Junior</h5>
+                    <p>Iniciación en el análisis de datos con Python, SQL y Power BI. 
+                       Desarrollo de reportes automatizados y visualizaciones para la toma de decisiones.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h4 class="fw-bold text-primary">2019</h4>
+                    <h5>Inicio en Tecnología</h5>
+                    <p>Formación autodidacta en programación y análisis de datos. 
+                       Primeros proyectos personales con Python y bases de datos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    .bg-light {
-        background-color: #f8f9fa !important;
-        border-radius: 10px;
-    }
+<!-- CTA Section -->
+<section class="cta-section" data-aos="fade-up">
+    <div class="container text-center">
+        <h2 class="display-5 fw-bold mb-4">¿Listo para Colaborar?</h2>
+        <p class="lead mb-4">
+            Si buscas un profesional comprometido con la excelencia en análisis de datos y desarrollo de software, 
+            estoy aquí para ayudarte a transformar tus ideas en realidad.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{% url 'contacto' %}" class="btn btn-primary btn-lg rounded-pill px-5">
+                <i class="fas fa-handshake me-2"></i>Trabajemos Juntos
+            </a>
+            <a href="{% url 'project_list' %}" class="btn btn-outline-primary btn-lg rounded-pill px-5">
+                <i class="fas fa-eye me-2"></i>Ver Mi Trabajo
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
 
-    .card {
-        border: none;
-        border-radius: 10px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .text-primary {
-        color: #007bff !important;
-    }
-
-    .text-success {
-        color: #28a745 !important;
-    }
-
-    .text-warning {
-        color: #ffc107 !important;
-    }
-
-    .text-center {
-        text-align: center !important;
-    }
-
-    .shadow-lg {
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
-    }
-
-    /* Estilos para la sección de Certificaciones */
-    .card {
-        border-radius: 10px;
-        transition: all 0.3s ease-in-out;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: bold;
-    }
-
-    .card-text {
-        color: #555;
-    }
-
-    .card .btn {
-        align-self: flex-start;
-        transition: background-color 0.3s;
-    }
-
-    .card .btn:hover {
-        background-color: #0056b3;
-    }
-
-    .text-warning {
-        color: #ffc107 !important;
-    }
-
-    .fa-medal {
-        margin-right: 10px;
-    }
-
-    .mb-4 {
-        margin-bottom: 1.5rem;
-    }
-
-    .shadow {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (max-width: 768px) {
-        .fa-medal {
-            margin-right: 5px;
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Typing effect
+    const typingElement = document.querySelector('.typing-effect');
+    if (typingElement) {
+        const text = typingElement.textContent;
+        typingElement.textContent = '';
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < text.length) {
+                typingElement.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
         }
-
-        .card-title {
-            font-size: 1.1rem;
+        
+        setTimeout(typeWriter, 1000);
+    }
+    
+    // Counter animation
+    function animateCounter(element, target, duration = 2000) {
+        let current = 0;
+        const increment = target / (duration / 16);
+        
+        function updateCounter() {
+            current += increment;
+            if (current < target) {
+                element.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                element.textContent = target;
+            }
+        }
+        
+        updateCounter();
+    }
+    
+    // Intersection Observer for counters
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.dataset.count);
+                animateCounter(counter, target);
+                counterObserver.unobserve(counter);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    // Observe all counters
+    document.querySelectorAll('[data-count]').forEach(counter => {
+        counterObserver.observe(counter);
+    });
+    
+    // Skills cards rotation effect
+    document.querySelectorAll('.skill-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.skill-icon');
+            icon.style.transform = 'scale(1.2) rotateY(180deg)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.skill-icon');
+            icon.style.transform = 'scale(1) rotateY(0deg)';
+        });
+    });
+    
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('.hero-about');
+        
+        if (parallax) {
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        }
+    });
+    
+    // Smooth reveal animation for timeline items
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    document.querySelectorAll('.timeline-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = 'all 0.6s ease';
+        timelineObserver.observe(item);
+    });
+    
+    // Dynamic background particles
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = Math.random() * 10 + 5 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.background = 'rgba(102, 126, 234, 0.3)';
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = '100%';
+        particle.style.pointerEvents = 'none';
+        particle.style.animation = `float-up ${Math.random() * 10 + 10}s linear infinite`;
+        
+        const heroSection = document.querySelector('.hero-about .floating-elements');
+        if (heroSection) {
+            heroSection.appendChild(particle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 20000);
         }
     }
-</style>
+    
+    // Create particles periodically
+    setInterval(createParticle, 3000);
+    
+    // Profile image hover effect
+    const profileImage = document.querySelector('.profile-image');
+    if (profileImage) {
+        profileImage.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05) rotate(5deg)';
+            this.style.filter = 'brightness(1.1)';
+        });
+        
+        profileImage.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+            this.style.filter = 'brightness(1)';
+        });
+    }
+    
+    // Button click tracking for analytics
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const buttonText = this.textContent.trim();
+            console.log(`Button clicked: ${buttonText}`);
+            
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = '50%';
+            ripple.style.top = '50%';
+            ripple.style.width = '100px';
+            ripple.style.height = '100px';
+            ripple.style.marginLeft = '-50px';
+            ripple.style.marginTop = '-50px';
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 600);
+        });
+    });
+    
+    // Add ripple animation keyframes
+    if (!document.querySelector('#ripple-styles')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-styles';
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Scroll progress indicator
+    const progressBar = document.querySelector('#progressBar');
+    window.addEventListener('scroll', function() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        
+        if (progressBar) {
+            progressBar.style.width = scrolled + '%';
+        }
+    });
+    
+    // Lazy loading for images
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+    
+    // Enhanced skill card interactions
+    document.querySelectorAll('.skill-card').forEach((card, index) => {
+        // Add staggered entrance animation
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        // Add click event for mobile devices
+        card.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+        
+        // Add focus for accessibility
+        card.setAttribute('tabindex', '0');
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Performance monitoring
+    if ('PerformanceObserver' in window) {
+        const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+                if (entry.entryType === 'largest-contentful-paint') {
+                    console.log('LCP:', entry.startTime);
+                }
+                if (entry.entryType === 'first-input') {
+                    console.log('FID:', entry.processingStart - entry.startTime);
+                }
+            }
+        });
+        
+        observer.observe({entryTypes: ['largest-contentful-paint', 'first-input']});
+    }
+    
+    // Easter egg - Konami code
+    let konamiCode = [];
+    const konamiSequence = [
+        'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+        'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+        'KeyB', 'KeyA'
+    ];
+    
+    document.addEventListener('keydown', function(e) {
+        konamiCode.push(e.code);
+        
+        if (konamiCode.length > konamiSequence.length) {
+            konamiCode.shift();
+        }
+        
+        if (konamiCode.join(',') === konamiSequence.join(',')) {
+            // Easter egg activated!
+            document.body.style.animation = 'rainbow 2s infinite';
+            setTimeout(() => {
+                document.body.style.animation = '';
+            }, 5000);
+            
+            // Add rainbow animation
+            if (!document.querySelector('#rainbow-styles')) {
+                const style = document.createElement('style');
+                style.id = 'rainbow-styles';
+                style.textContent = `
+                    @keyframes rainbow {
+                        0% { filter: hue-rotate(0deg); }
+                        100% { filter: hue-rotate(360deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            konamiCode = [];
+        }
+    });
+    
+    console.log('✨ About page enhanced with advanced interactions loaded!');
+});
+
+// Service Worker registration for caching
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+</script>
 {% endblock %}

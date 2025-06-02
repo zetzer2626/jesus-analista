@@ -2,103 +2,441 @@
 
 {% block title %}Certificaciones{% endblock %}
 
+{% block extra_css %}
+<style>
+  .cert-hero {
+    background: linear-gradient(135deg, #252325 0%, #38040b 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cert-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+  }
+  
+  .cert-card {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+    height: 100%;
+    border-left: 5px solid transparent;
+  }
+  
+  .cert-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  }
+  
+  .cert-card.premium {
+    border-left-color: #ffd700;
+    background: linear-gradient(145deg, #fff 0%, #fffef7 100%);
+  }
+  
+  .cert-card.professional {
+    border-left-color: #4dabf7;
+    background: linear-gradient(145deg, #fff 0%, #f0f8ff 100%);
+  }
+  
+  .cert-card.academic {
+    border-left-color: #51cf66;
+    background: linear-gradient(145deg, #fff 0%, #f0fff4 100%);
+  }
+  
+  .cert-header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+  }
+  
+  .cert-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  }
+  
+  .cert-icon.premium {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #333;
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+  }
+  
+  .cert-icon.professional {
+    background: linear-gradient(135deg, #4dabf7 0%, #339af0 100%);
+    box-shadow: 0 8px 20px rgba(77, 171, 247, 0.4);
+  }
+  
+  .cert-icon.academic {
+    background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+    box-shadow: 0 8px 20px rgba(81, 207, 102, 0.4);
+  }
+  
+  .cert-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  
+  .cert-body {
+    padding: 0 2rem 2rem;
+  }
+  
+  .cert-info {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cert-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+  }
+  
+  .cert-detail:last-child {
+    margin-bottom: 0;
+  }
+  
+  .cert-detail i {
+    width: 20px;
+    margin-right: 0.75rem;
+    color: #667eea;
+  }
+  
+  .cert-label {
+    font-weight: 600;
+    color: #4a5568;
+    margin-right: 0.5rem;
+  }
+  
+  .cert-value {
+    color: #718096;
+  }
+  
+  .cert-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 0.875rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+  
+  .cert-btn:hover {
+    color: white;
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    text-decoration: none;
+  }
+  
+  .cert-btn i {
+    font-size: 1.1rem;
+  }
+  
+  .filter-section {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+  
+  .filter-btn {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    color: #4a5568;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin: 0.25rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .filter-btn.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+  }
+  
+  .filter-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+  }
+  
+  .filter-btn.active:hover {
+    color: white;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #667eea;
+    line-height: 1;
+  }
+  
+  .stat-label {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #718096;
+  }
+  
+  .empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #e2e8f0;
+  }
+  
+  @media (max-width: 768px) {
+    .cert-hero {
+      padding: 2rem 0;
+    }
+    
+    .cert-header, .cert-body {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-    <!-- Sección de Certificaciones -->
-    <div class="container py-5">
-        <h2 class="text-center mb-4 text-primary">Certificaciones</h2>
-        <div class="row">
-            {% for cert in certifications %}
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-lg rounded-lg overflow-hidden">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fas fa-medal fa-3x text-warning mr-3"></i>
-                            <h5 class="card-title text-dark">{{ cert.name }}</h5>
-                        </div>
-                        <p class="card-text text-muted"><strong>Institución:</strong> {{ cert.institution }}</p>
-                        <p class="card-text text-muted"><strong>Año:</strong> {{ cert.year }}</p>
-                        <a href="{{ cert.certificate_file.url }}" target="_blank" class="btn btn-outline-primary mt-auto">Ver Certificado</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+<!-- Hero Section -->
+<section class="cert-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-4 font-weight-bold mb-3">Mis Certificaciones</h1>
+        <p class="lead mb-0">Conocimientos y habilidades respaldadas por instituciones reconocidas</p>
+      </div>
+      <div class="col-lg-4">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">{{ certifications|length }}</div>
+            <div class="stat-label">Certificaciones</div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <style>
-        /* Estilos para la sección de Certificaciones */
-        .card {
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+<div class="container">
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <div class="row align-items-center">
+      <div class="col-lg-3">
+        <h5 class="mb-3 mb-lg-0 text-dark">Filtrar por:</h5>
+      </div>
+      <div class="col-lg-9">
+        <button class="btn filter-btn active" data-filter="all">
+          <i class="fas fa-th-large mr-1"></i> Todas
+        </button>
+        <button class="btn filter-btn" data-filter="premium">
+          <i class="fas fa-crown mr-1"></i> Premium
+        </button>
+        <button class="btn filter-btn" data-filter="professional">
+          <i class="fas fa-briefcase mr-1"></i> Profesionales
+        </button>
+        <button class="btn filter-btn" data-filter="academic">
+          <i class="fas fa-graduation-cap mr-1"></i> Académicas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificates Grid -->
+  <div class="row" id="certificatesGrid">
+    {% for cert in certifications %}
+      <div class="col-lg-4 col-md-6 mb-4 cert-item" data-category="{% cycle 'premium' 'professional' 'academic' %}">
+        <div class="card cert-card {% cycle 'premium' 'professional' 'academic' %}">
+          
+          <!-- Header -->
+          <div class="cert-header">
+            <div class="cert-icon {% cycle 'premium' 'professional' 'academic' %}">
+              {% cycle '<i class="fas fa-award"></i>' '<i class="fas fa-certificate"></i>' '<i class="fas fa-medal"></i>' %}
+            </div>
+            <h5 class="cert-title">{{ cert.name }}</h5>
+          </div>
+          
+          <!-- Body -->
+          <div class="cert-body">
+            <div class="cert-info">
+              <div class="cert-detail">
+                <i class="fas fa-university"></i>
+                <span class="cert-label">Institución:</span>
+                <span class="cert-value">{{ cert.institution }}</span>
+              </div>
+              
+              <div class="cert-detail">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="cert-label">Año:</span>
+                <span class="cert-value">{{ cert.year }}</span>
+              </div>
+              
+              {% if cert.expiry_date %}
+              <div class="cert-detail">
+                <i class="fas fa-clock"></i>
+                <span class="cert-label">Vigencia:</span>
+                <span class="cert-value">{{ cert.expiry_date }}</span>
+              </div>
+              {% endif %}
+              
+              {% if cert.credential_id %}
+              <div class="cert-detail">
+                <i class="fas fa-fingerprint"></i>
+                <span class="cert-label">ID:</span>
+                <span class="cert-value">{{ cert.credential_id }}</span>
+              </div>
+              {% endif %}
+            </div>
+            
+            <a href="{{ cert.certificate_file.url }}" target="_blank" class="cert-btn">
+              <i class="fas fa-external-link-alt"></i>
+              <span>Ver Certificado</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="empty-state">
+          <i class="fas fa-certificate"></i>
+          <h4>No hay certificaciones disponibles</h4>
+          <p>Pronto agregaré nuevas certificaciones y logros profesionales.</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <!-- No Results Message -->
+  <div class="row" id="noResults" style="display: none;">
+    <div class="col-12">
+      <div class="empty-state">
+        <i class="fas fa-search"></i>
+        <h4>No se encontraron certificaciones</h4>
+        <p>Intenta con otro filtro para ver más resultados.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Filtrado de certificaciones
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const certItems = document.querySelectorAll('.cert-item');
+  const certificatesGrid = document.getElementById('certificatesGrid');
+  const noResults = document.getElementById('noResults');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Actualizar botón activo
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      const filter = this.getAttribute('data-filter');
+      let visibleCount = 0;
+      
+      certItems.forEach(item => {
+        const category = item.getAttribute('data-category');
+        
+        if (filter === 'all' || category === filter) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
         }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 2rem;
-        }
-
-        .card-title {
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .card-text {
-            font-size: 1rem;
-            color: #555;
-        }
-
-        .card .btn {
-            padding: 0.8rem 1.5rem;
-            font-weight: 500;
-            border-radius: 25px;
-            transition: background-color 0.3s ease;
-        }
-
-        .card .btn:hover {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .text-warning {
-            color: #ffc107 !important;
-        }
-
-        .fa-medal {
-            margin-right: 15px;
-        }
-
-        .mb-4 {
-            margin-bottom: 2rem;
-        }
-
-        .shadow-lg {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-        }
-
-        @media (max-width: 768px) {
-            .fa-medal {
-                margin-right: 8px;
-            }
-
-            .card-title {
-                font-size: 1.2rem;
-            }
-
-            .card .btn {
-                padding: 0.6rem 1.3rem;
-            }
-        }
-    </style>
+      });
+      
+      // Mostrar/ocultar mensaje de no resultados
+      if (visibleCount === 0) {
+        certificatesGrid.style.display = 'none';
+        noResults.style.display = 'block';
+      } else {
+        certificatesGrid.style.display = 'flex';
+        noResults.style.display = 'none';
+      }
+    });
+  });
+  
+  // Animación de entrada para las cards
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+  
+  // Aplicar animación inicial
+  certItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+    observer.observe(item);
+  });
+});
+</script>
 {% endblock %}
