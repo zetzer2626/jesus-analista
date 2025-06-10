@@ -1,442 +1,688 @@
 {% extends 'base.html' %}
 
-{% block title %}Certificaciones{% endblock %}
+{% block title %}Certificaciones - Mi Portafolio{% endblock %}
 
 {% block extra_css %}
 <style>
-  .cert-hero {
-    background: linear-gradient(135deg, #252325 0%, #38040b 100%);
-    color: white;
-    padding: 4rem 0;
-    margin-bottom: 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .cert-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-  }
-  
-  .cert-card {
-    background: white;
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    position: relative;
-    height: 100%;
-    border-left: 5px solid transparent;
-  }
-  
-  .cert-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-  }
-  
-  .cert-card.premium {
-    border-left-color: #ffd700;
-    background: linear-gradient(145deg, #fff 0%, #fffef7 100%);
-  }
-  
-  .cert-card.professional {
-    border-left-color: #4dabf7;
-    background: linear-gradient(145deg, #fff 0%, #f0f8ff 100%);
-  }
-  
-  .cert-card.academic {
-    border-left-color: #51cf66;
-    background: linear-gradient(145deg, #fff 0%, #f0fff4 100%);
-  }
-  
-  .cert-header {
-    padding: 2rem 2rem 1rem;
-    text-align: center;
-  }
-  
-  .cert-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 2rem;
-    color: white;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-  }
-  
-  .cert-icon.premium {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-    color: #333;
-    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
-  }
-  
-  .cert-icon.professional {
-    background: linear-gradient(135deg, #4dabf7 0%, #339af0 100%);
-    box-shadow: 0 8px 20px rgba(77, 171, 247, 0.4);
-  }
-  
-  .cert-icon.academic {
-    background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
-    box-shadow: 0 8px 20px rgba(81, 207, 102, 0.4);
-  }
-  
-  .cert-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-  }
-  
-  .cert-body {
-    padding: 0 2rem 2rem;
-  }
-  
-  .cert-info {
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .cert-detail {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-  }
-  
-  .cert-detail:last-child {
-    margin-bottom: 0;
-  }
-  
-  .cert-detail i {
-    width: 20px;
-    margin-right: 0.75rem;
-    color: #667eea;
-  }
-  
-  .cert-label {
-    font-weight: 600;
-    color: #4a5568;
-    margin-right: 0.5rem;
-  }
-  
-  .cert-value {
-    color: #718096;
-  }
-  
-  .cert-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    color: white;
-    padding: 0.875rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-    width: 100%;
-    justify-content: center;
-    font-size: 0.95rem;
-  }
-  
-  .cert-btn:hover {
-    color: white;
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    text-decoration: none;
-  }
-  
-  .cert-btn i {
-    font-size: 1.1rem;
-  }
-  
-  .filter-section {
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 3rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-  }
-  
-  .filter-btn {
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    color: #4a5568;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    margin: 0.25rem;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-  }
-  
-  .filter-btn.active {
-    background: #667eea;
-    border-color: #667eea;
-    color: white;
-  }
-  
-  .filter-btn:hover {
-    border-color: #667eea;
-    color: #667eea;
-  }
-  
-  .filter-btn.active:hover {
-    color: white;
-  }
-  
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .stat-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  }
-  
-  .stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #667eea;
-    line-height: 1;
-  }
-  
-  .stat-label {
-    color: #718096;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-  }
-  
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: #718096;
-  }
-  
-  .empty-state i {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    color: #e2e8f0;
-  }
-  
-  @media (max-width: 768px) {
-    .cert-hero {
-      padding: 2rem 0;
+    .hero-section {
+        background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-bg) 100%);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
     }
-    
-    .cert-header, .cert-body {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239146ff" fill-opacity="0.05"><polygon points="36 34 24 44 12 34 12 26 24 16 36 26"/></g></svg>') repeat;
+        opacity: 0.3;
     }
-    
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .certification-card {
+        transition: all 0.3s ease;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .certification-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(145, 70, 255, 0.2);
+    }
+
+    .certification-header {
+        background: linear-gradient(135deg, var(--twitch-purple), var(--twitch-dark-purple));
+        color: white;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .certification-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="20" cy="20" r="3"/></g></svg>') repeat;
+        animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateX(0) translateY(0); }
+        100% { transform: translateX(-40px) translateY(-40px); }
+    }
+
+    .certification-icon {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .certification-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .certification-institution {
+        opacity: 0.9;
+        font-size: 0.9rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .certification-body {
+        padding: 1.5rem;
+        background-color: var(--dark-surface);
+    }
+
+    .certification-year {
+        background: linear-gradient(45deg, var(--success), #00d4aa);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .certification-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .stats-section {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
     .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
     }
-  }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background-color: var(--dark-bg);
+        border-radius: 0.375rem;
+        border: 1px solid var(--dark-border);
+        transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+        border-color: var(--twitch-purple);
+        transform: translateY(-2px);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--twitch-purple);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .filter-section {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .year-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .year-btn {
+        background-color: transparent;
+        border: 1px solid var(--dark-border);
+        color: var(--text-secondary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .year-btn:hover,
+    .year-btn.active {
+        background-color: var(--twitch-purple);
+        border-color: var(--twitch-purple);
+        color: white;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .breadcrumb-item a {
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        color: var(--twitch-purple);
+    }
+
+    .timeline-view {
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .timeline-line {
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--twitch-purple), var(--twitch-dark-purple));
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+        padding-left: 1rem;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: -1.5rem;
+        top: 1rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--twitch-purple);
+        border: 3px solid var(--dark-bg);
+    }
+
+    .view-toggle {
+        display: flex;
+        background-color: var(--dark-surface);
+        border-radius: 0.375rem;
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+
+    .view-toggle button {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        background-color: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .view-toggle button.active {
+        background-color: var(--twitch-purple);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 0;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .certification-header {
+            padding: 1rem;
+        }
+        
+        .certification-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.25rem;
+        }
+        
+        .timeline-view {
+            padding-left: 1.5rem;
+        }
+        
+        .timeline-dot {
+            left: -1.25rem;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="cert-hero">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-8">
-        <h1 class="display-4 font-weight-bold mb-3">Mis Certificaciones</h1>
-        <p class="lead mb-0">Conocimientos y habilidades respaldadas por instituciones reconocidas</p>
-      </div>
-      <div class="col-lg-4">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-number">{{ certifications|length }}</div>
-            <div class="stat-label">Certificaciones</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="container">
-  <!-- Filter Section -->
-  <div class="filter-section">
-    <div class="row align-items-center">
-      <div class="col-lg-3">
-        <h5 class="mb-3 mb-lg-0 text-dark">Filtrar por:</h5>
-      </div>
-      <div class="col-lg-9">
-        <button class="btn filter-btn active" data-filter="all">
-          <i class="fas fa-th-large mr-1"></i> Todas
-        </button>
-        <button class="btn filter-btn" data-filter="premium">
-          <i class="fas fa-crown mr-1"></i> Premium
-        </button>
-        <button class="btn filter-btn" data-filter="professional">
-          <i class="fas fa-briefcase mr-1"></i> Profesionales
-        </button>
-        <button class="btn filter-btn" data-filter="academic">
-          <i class="fas fa-graduation-cap mr-1"></i> Académicas
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Certificates Grid -->
-  <div class="row" id="certificatesGrid">
-    {% for cert in certifications %}
-      <div class="col-lg-4 col-md-6 mb-4 cert-item" data-category="{% cycle 'premium' 'professional' 'academic' %}">
-        <div class="card cert-card {% cycle 'premium' 'professional' 'academic' %}">
-          
-          <!-- Header -->
-          <div class="cert-header">
-            <div class="cert-icon {% cycle 'premium' 'professional' 'academic' %}">
-              {% cycle '<i class="fas fa-award"></i>' '<i class="fas fa-certificate"></i>' '<i class="fas fa-medal"></i>' %}
-            </div>
-            <h5 class="cert-title">{{ cert.name }}</h5>
-          </div>
-          
-          <!-- Body -->
-          <div class="cert-body">
-            <div class="cert-info">
-              <div class="cert-detail">
-                <i class="fas fa-university"></i>
-                <span class="cert-label">Institución:</span>
-                <span class="cert-value">{{ cert.institution }}</span>
-              </div>
-              
-              <div class="cert-detail">
-                <i class="fas fa-calendar-alt"></i>
-                <span class="cert-label">Año:</span>
-                <span class="cert-value">{{ cert.year }}</span>
-              </div>
-              
-              {% if cert.expiry_date %}
-              <div class="cert-detail">
-                <i class="fas fa-clock"></i>
-                <span class="cert-label">Vigencia:</span>
-                <span class="cert-value">{{ cert.expiry_date }}</span>
-              </div>
-              {% endif %}
-              
-              {% if cert.credential_id %}
-              <div class="cert-detail">
-                <i class="fas fa-fingerprint"></i>
-                <span class="cert-label">ID:</span>
-                <span class="cert-value">{{ cert.credential_id }}</span>
-              </div>
-              {% endif %}
-            </div>
-            
-            <a href="{{ cert.certificate_file.url }}" target="_blank" class="cert-btn">
-              <i class="fas fa-external-link-alt"></i>
-              <span>Ver Certificado</span>
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{% url 'project_list' %}">
+                <i class="fas fa-home me-1"></i>Proyectos
             </a>
-          </div>
-        </div>
-      </div>
-    {% empty %}
-      <div class="col-12">
-        <div class="empty-state">
-          <i class="fas fa-certificate"></i>
-          <h4>No hay certificaciones disponibles</h4>
-          <p>Pronto agregaré nuevas certificaciones y logros profesionales.</p>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-  
-  <!-- No Results Message -->
-  <div class="row" id="noResults" style="display: none;">
-    <div class="col-12">
-      <div class="empty-state">
-        <i class="fas fa-search"></i>
-        <h4>No se encontraron certificaciones</h4>
-        <p>Intenta con otro filtro para ver más resultados.</p>
-      </div>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Certificaciones</li>
+    </ol>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section mb-4">
+    <div class="hero-content text-center">
+        <h1 class="display-4 fw-bold text-purple mb-3">
+            <i class="fas fa-certificate me-3"></i>Certificaciones
+        </h1>
+        <p class="lead text-secondary mb-0">
+            Mi crecimiento profesional y certificaciones obtenidas
+        </p>
     </div>
-  </div>
 </div>
 
+<!-- Statistics Section -->
+{% if certifications %}
+<div class="stats-section">
+    <h3 class="text-center mb-4">
+        <i class="fas fa-chart-line me-2 text-purple"></i>Estadísticas de Certificaciones
+    </h3>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">{{ certifications|length }}</div>
+            <div class="stat-label">Certificaciones Totales</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">
+                {% regroup certifications by institution as institutions %}
+                {{ institutions|length }}
+            </div>
+            <div class="stat-label">Instituciones</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">
+                {% with current_year=request.resolver_match.kwargs.current_year|default:2024 %}
+                    {% with this_year_certs=0 %}
+                        {% for cert in certifications %}
+                            {% if cert.year == current_year %}
+                                {% with this_year_certs=this_year_certs|add:1 %}{% endwith %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ this_year_certs }}
+                    {% endwith %}
+                {% endwith %}
+            </div>
+            <div class="stat-label">Este Año</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">
+                {% for cert in certifications %}
+                    {% if forloop.first %}{{ cert.year }}{% endif %}
+                {% endfor %}
+                {% for cert in certifications reversed %}
+                    {% if forloop.first %} - {{ cert.year }}{% endif %}
+                {% endfor %}
+            </div>
+            <div class="stat-label">Período</div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Section -->
+<div class="filter-section">
+    <h4 class="mb-3">
+        <i class="fas fa-filter me-2"></i>Filtrar por Año
+    </h4>
+    <div class="year-filter">
+        <button class="year-btn active" data-year="all">Todos</button>
+        {% regroup certifications by year as years %}
+        {% for year_group in years reversed %}
+        <button class="year-btn" data-year="{{ year_group.grouper }}">
+            {{ year_group.grouper }} ({{ year_group.list|length }})
+        </button>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- View Toggle -->
+<div class="view-toggle">
+    <button class="active" id="gridViewBtn">
+        <i class="fas fa-th me-2"></i>Vista de Cuadrícula
+    </button>
+    <button id="timelineViewBtn">
+        <i class="fas fa-stream me-2"></i>Vista de Línea de Tiempo
+    </button>
+</div>
+{% endif %}
+
+<!-- Certifications Grid/Timeline -->
+{% if certifications %}
+<div id="certificationsContainer">
+    <!-- Grid View -->
+    <div id="gridView" class="row g-4">
+        {% for certification in certifications %}
+        <div class="col-lg-4 col-md-6 certification-item" data-year="{{ certification.year }}">
+            <div class="card certification-card h-100">
+                <div class="certification-header">
+                    <div class="certification-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="certification-title">{{ certification.name }}</div>
+                    <div class="certification-institution">{{ certification.institution }}</div>
+                </div>
+                
+                <div class="certification-body">
+                    <div class="certification-year">{{ certification.year }}</div>
+                    
+                    <div class="certification-actions">
+                        {% if certification.certificate_file %}
+                        <a href="{{ certification.certificate_file.url }}" target="_blank" class="btn btn-primary btn-sm flex-fill">
+                            <i class="fas fa-download me-1"></i>Descargar
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'certification_update' certification.pk %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'certification_delete' certification.pk %}" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Timeline View -->
+    <div id="timelineView" class="timeline-view" style="display: none;">
+        <div class="timeline-line"></div>
+        {% regroup certifications by year as years %}
+        {% for year_group in years reversed %}
+        <div class="timeline-item certification-item" data-year="{{ year_group.grouper }}">
+            <div class="timeline-dot"></div>
+            <div class="card">
+                <div class="card-header bg-purple text-white">
+                    <h4 class="mb-0">{{ year_group.grouper }}</h4>
+                    <small>{{ year_group.list|length }} certificación{{ year_group.list|length|pluralize:"es" }}</small>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% for certification in year_group.list %}
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="certification-icon me-3" style="width: 40px; height: 40px; font-size: 1rem;">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ certification.name }}</h6>
+                                    <p class="text-secondary mb-2 small">{{ certification.institution }}</p>
+                                    <div class="btn-group btn-group-sm">
+                                        {% if certification.certificate_file %}
+                                        <a href="{{ certification.certificate_file.url }}" target="_blank" class="btn btn-outline-primary">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                        {% endif %}
+                                        <a href="{% url 'certification_update' certification.pk %}" class="btn btn-outline-secondary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="text-center mt-5 pt-4 border-top border-secondary">
+    <h4 class="text-secondary mb-3">Gestión de Certificaciones</h4>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        <a href="{% url 'certification_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Nueva Certificación
+        </a>
+        <a href="{% url 'project_list' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-code me-2"></i>Ver Proyectos
+        </a>
+        <a href="{% url 'about' %}" class="btn btn-outline-primary">
+            <i class="fas fa-user me-2"></i>Acerca de Mí
+        </a>
+    </div>
+</div>
+
+{% else %}
+<!-- Empty State -->
+<div class="empty-state">
+    <i class="fas fa-certificate"></i>
+    <h3 class="mt-3">No hay certificaciones disponibles</h3>
+    <p class="text-secondary">
+        Aún no has agregado certificaciones a tu portafolio.
+        <br>
+        Muestra tus logros y crecimiento profesional.
+    </p>
+    <a href="{% url 'certification_create' %}" class="btn btn-primary mt-3">
+        <i class="fas fa-plus me-2"></i>Agregar tu primera certificación
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Filtrado de certificaciones
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const certItems = document.querySelectorAll('.cert-item');
-  const certificatesGrid = document.getElementById('certificatesGrid');
-  const noResults = document.getElementById('noResults');
-  
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      // Actualizar botón activo
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      this.classList.add('active');
-      
-      const filter = this.getAttribute('data-filter');
-      let visibleCount = 0;
-      
-      certItems.forEach(item => {
-        const category = item.getAttribute('data-category');
+    // View toggle functionality
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const timelineViewBtn = document.getElementById('timelineViewBtn');
+    const gridView = document.getElementById('gridView');
+    const timelineView = document.getElementById('timelineView');
+    
+    if (gridViewBtn && timelineViewBtn) {
+        gridViewBtn.addEventListener('click', function() {
+            this.classList.add('active');
+            timelineViewBtn.classList.remove('active');
+            gridView.style.display = 'block';
+            timelineView.style.display = 'none';
+            
+            // Trigger card animations
+            setTimeout(() => {
+                gridView.querySelectorAll('.certification-card').forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.3s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 100);
+        });
         
-        if (filter === 'all' || category === filter) {
-          item.style.display = 'block';
-          visibleCount++;
-        } else {
-          item.style.display = 'none';
+        timelineViewBtn.addEventListener('click', function() {
+            this.classList.add('active');
+            gridViewBtn.classList.remove('active');
+            gridView.style.display = 'none';
+            timelineView.style.display = 'block';
+            
+            // Trigger timeline animations
+            setTimeout(() => {
+                timelineView.querySelectorAll('.timeline-item').forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-20px)';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, index * 200);
+                });
+            }, 100);
+        });
+    }
+    
+    // Year filter functionality
+    const yearButtons = document.querySelectorAll('.year-btn');
+    const certificationItems = document.querySelectorAll('.certification-item');
+    
+    yearButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const selectedYear = this.dataset.year;
+            
+            // Update active button
+            yearButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter certifications
+            certificationItems.forEach(item => {
+                const itemYear = item.dataset.year;
+                
+                if (selectedYear === 'all' || itemYear === selectedYear) {
+                    item.style.display = 'block';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.3s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(-20px)';
+                    
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+    
+    // Enhanced card hover effects
+    const certificationCards = document.querySelectorAll('.certification-card');
+    
+    certificationCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+            
+            const header = this.querySelector('.certification-header');
+            if (header) {
+                header.style.background = 'linear-gradient(135deg, var(--twitch-dark-purple), var(--twitch-purple))';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(-5px) scale(1)';
+            
+            const header = this.querySelector('.certification-header');
+            if (header) {
+                header.style.background = 'linear-gradient(135deg, var(--twitch-purple), var(--twitch-dark-purple))';
+            }
+        });
+    });
+    
+    // Add success message for certificate downloads
+    const downloadLinks = document.querySelectorAll('a[href*="certificate_file"]');
+    downloadLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const certName = this.closest('.certification-card').querySelector('.certification-title').textContent;
+            
+            // Show temporary success message
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 m-3 alert alert-success alert-dismissible fade show';
+            toast.style.zIndex = '1050';
+            toast.innerHTML = `
+                <i class="fas fa-download me-2"></i>
+                Descargando certificado: ${certName}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        });
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            const focusedElement = document.activeElement;
+            const buttons = Array.from(document.querySelectorAll('.certification-actions .btn'));
+            const currentIndex = buttons.indexOf(focusedElement);
+            
+            if (currentIndex !== -1) {
+                e.preventDefault();
+                let nextIndex;
+                
+                if (e.key === 'ArrowRight') {
+                    nextIndex = (currentIndex + 1) % buttons.length;
+                } else {
+                    nextIndex = currentIndex === 0 ? buttons.length - 1 : currentIndex - 1;
+                }
+                
+                buttons[nextIndex].focus();
+            }
         }
-      });
-      
-      // Mostrar/ocultar mensaje de no resultados
-      if (visibleCount === 0) {
-        certificatesGrid.style.display = 'none';
-        noResults.style.display = 'block';
-      } else {
-        certificatesGrid.style.display = 'flex';
-        noResults.style.display = 'none';
-      }
     });
-  });
-  
-  // Animación de entrada para las cards
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-  
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, observerOptions);
-  
-  // Aplicar animación inicial
-  certItems.forEach((item, index) => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateY(30px)';
-    item.style.transition = `all 0.6s ease ${index * 0.1}s`;
-    observer.observe(item);
-  });
+    
+    // Initial load animation
+    setTimeout(() => {
+        certificationCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 150);
+        });
+    }, 300);
 });
 </script>
 {% endblock %}

@@ -1,207 +1,976 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %}Contacto - Jesús Navarrete{% endblock %}
-
-{% block meta_description %}
-Ponte en contacto conmigo para proyectos de análisis de datos y desarrollo web. Información de contacto y redes sociales.
-{% endblock %}
+{% block title %}Contacto - Mi Portafolio{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-bg) 100%);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239146ff" fill-opacity="0.05"><polygon points="36 34 24 44 12 34 12 26 24 16 36 26"/></g></svg>') repeat;
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-card {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+        border-color: var(--twitch-purple);
+        transform: translateY(-2px);
+    }
+
+    .contact-method {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        background-color: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .contact-method:hover {
+        border-color: var(--twitch-purple);
+        background-color: rgba(145, 70, 255, 0.05);
+        transform: translateX(5px);
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .contact-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--twitch-purple), var(--twitch-dark-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .contact-info h5 {
+        margin-bottom: 0.25rem;
+        color: var(--text-primary);
+    }
+
+    .contact-info p {
+        margin-bottom: 0;
+        color: var(--text-secondary);
+    }
+
+    .contact-form {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 2rem;
+    }
+
+    .location-card, .timezone-card {
+        background-color: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .location-card:hover, .timezone-card:hover {
+        border-color: var(--twitch-purple);
+        transform: translateY(-2px);
+    }
+
+    .location-icon, .timezone-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--twitch-purple), var(--twitch-dark-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+
+    .location-info h4, .timezone-info h4 {
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .schedule-section {
+        background-color: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .schedule-item {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .schedule-item:hover {
+        border-color: var(--twitch-purple);
+        transform: translateY(-2px);
+    }
+
+    .day-group h5 {
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+    }
+
+    .time-range {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .time-range.offline {
+        color: var(--text-muted);
+    }
+
+    .preferences-section {
+        background-color: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .preferences-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .preference-item {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .preference-item:hover {
+        border-color: var(--twitch-purple);
+        background-color: rgba(145, 70, 255, 0.05);
+        transform: translateY(-3px);
+    }
+
+    .preference-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--twitch-purple), var(--twitch-dark-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin: 0 auto 1rem;
+    }
+
+    .preference-item h5 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .preference-item p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    .quick-actions {
+        background-color: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .action-btn {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-decoration: none;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .action-btn:hover {
+        color: white;
+        background: linear-gradient(45deg, var(--twitch-purple), var(--twitch-dark-purple));
+        border-color: var(--twitch-purple);
+        transform: translateY(-3px);
+        text-decoration: none;
+    }
+
+    .action-btn i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .action-btn span {
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .social-section {
+        background: linear-gradient(135deg, var(--twitch-purple), var(--twitch-dark-purple));
+        color: white;
+        border-radius: 0.5rem;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="20" cy="20" r="3"/></g></svg>') repeat;
+        animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateX(0) translateY(0); }
+        100% { transform: translateX(-40px) translateY(-40px); }
+    }
+
+    .social-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .social-link {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .social-link:hover {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-3px) scale(1.1);
+    }
+
+    .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--success);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .availability-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: white;
+        margin-right: 0.5rem;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .breadcrumb-item a {
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        color: var(--twitch-purple);
+    }
+
+    .section-title {
+        color: var(--twitch-purple);
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+    }
+
+    .section-title i {
+        margin-right: 0.75rem;
+    }
+
+    .response-time {
+        background-color: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .response-icon {
+        font-size: 2rem;
+        color: var(--twitch-purple);
+        margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 0;
+        }
+        
+        .contact-card, .contact-form {
+            padding: 1.5rem;
+        }
+        
+        .contact-method {
+            padding: 1rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+        }
+        
+        .social-links {
+            gap: 0.75rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            font-size: 1.25rem;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{% url 'project_list' %}">
+                <i class="fas fa-home me-1"></i>Proyectos
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+    </ol>
+</nav>
+
 <!-- Hero Section -->
-<section class="contact-hero">
-    <div class="hero-background"></div>
-    <div class="container">
-        <div class="hero-content" data-aos="fade-up">
-            <h1 class="hero-title">¡Conectemos!</h1>
-            <p class="hero-subtitle">¿Tienes un proyecto en mente? Me encantaría escucharte</p>
-            <div class="hero-cta">
-                <a href="mailto:jnavarrete2626@gmail.com" class="cta-button primary">
-                    <i class="fas fa-envelope me-2"></i>
-                    Enviar Email
-                </a>
-                <a href="https://linkedin.com/in/jesus-navarrete" class="cta-button secondary" target="_blank">
-                    <i class="fab fa-linkedin me-2"></i>
-                    Ver LinkedIn
-                </a>
+<div class="hero-section">
+    <div class="hero-content text-center">
+        <h1 class="display-4 fw-bold text-purple mb-3">
+            <i class="fas fa-paper-plane me-3"></i>¡Hablemos!
+        </h1>
+        <p class="lead text-secondary mb-3">
+            ¿Tienes un proyecto en mente? ¿Quieres colaborar? Me encantaría conocer tus ideas
+        </p>
+        <div class="availability-badge">
+            <span class="availability-dot"></span>
+            Disponible para proyectos
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Contact Methods -->
+    <div class="col-lg-4 mb-4">
+        <div class="contact-card">
+            <h2 class="section-title">
+                <i class="fas fa-address-book"></i>Métodos de Contacto
+            </h2>
+            
+            <!-- Email -->
+            <a href="mailto:{{ email }}" class="contact-method">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-info">
+                    <h5>Email</h5>
+                    <p>{{ email }}</p>
+                </div>
+            </a>
+            
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com" target="_blank" class="contact-method">
+                <div class="contact-icon">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+                <div class="contact-info">
+                    <h5>LinkedIn</h5>
+                    <p>Conectemos profesionalmente</p>
+                </div>
+            </a>
+            
+            <!-- GitHub -->
+            <a href="https://github.com" target="_blank" class="contact-method">
+                <div class="contact-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="contact-info">
+                    <h5>GitHub</h5>
+                    <p>Revisa mi código</p>
+                </div>
+            </a>
+            
+            <!-- WhatsApp -->
+            <a href="https://wa.me/56912345678" target="_blank" class="contact-method">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="contact-info">
+                    <h5>WhatsApp</h5>
+                    <p>Mensaje directo</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Response Time -->
+        <div class="response-time">
+            <div class="response-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h5 class="text-primary">Tiempo de Respuesta</h5>
+            <p class="text-secondary mb-0">Normalmente respondo en 24-48 horas</p>
+        </div>
+    </div>
+
+    <!-- Location & Schedule -->
+    <div class="col-lg-8">
+        <div class="contact-form">
+            <h2 class="section-title">
+                <i class="fas fa-map-marker-alt"></i>Ubicación y Disponibilidad
+            </h2>
+            
+            <!-- Location Info -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="location-info">
+                            <h4>Santiago, Chile</h4>
+                            <p class="text-secondary mb-2">Región Metropolitana</p>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>GMT-3 (Hora de Chile)
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="timezone-card">
+                        <div class="timezone-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="timezone-info">
+                            <h4>Trabajo Remoto</h4>
+                            <p class="text-secondary mb-2">100% Disponible</p>
+                            <small class="text-muted">
+                                <i class="fas fa-wifi me-1"></i>Colaboración global
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule -->
+            <div class="schedule-section">
+                <h3 class="mb-3">
+                    <i class="fas fa-calendar-alt me-2 text-purple"></i>Mi Horario de Trabajo
+                </h3>
+                <div class="schedule-grid">
+                    <div class="schedule-item">
+                        <div class="day-group">
+                            <h5>Lunes - Viernes</h5>
+                            <div class="time-range">
+                                <i class="fas fa-sun text-warning me-2"></i>
+                                9:00 AM - 6:00 PM
+                            </div>
+                            <small class="text-muted">Horario comercial principal</small>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item">
+                        <div class="day-group">
+                            <h5>Sábados</h5>
+                            <div class="time-range">
+                                <i class="fas fa-moon text-info me-2"></i>
+                                10:00 AM - 2:00 PM
+                            </div>
+                            <small class="text-muted">Proyectos urgentes únicamente</small>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item">
+                        <div class="day-group">
+                            <h5>Domingos</h5>
+                            <div class="time-range offline">
+                                <i class="fas fa-power-off text-danger me-2"></i>
+                                Desconectado
+                            </div>
+                            <small class="text-muted">Día de descanso</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Preferences -->
+            <div class="preferences-section mt-4">
+                <h3 class="mb-3">
+                    <i class="fas fa-heart me-2 text-purple"></i>Tipos de Proyectos que Me Emocionan
+                </h3>
+                <div class="preferences-grid">
+                    <div class="preference-item">
+                        <div class="preference-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h5>Startups Innovadoras</h5>
+                        <p>MVP, escalabilidad, tecnologías emergentes</p>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h5>E-commerce</h5>
+                        <p>Plataformas de venta, integración de pagos</p>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h5>EdTech</h5>
+                        <p>Plataformas educativas, LMS, gamificación</p>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h5>HealthTech</h5>
+                        <p>Aplicaciones médicas, telemedicina</p>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h5>Open Source</h5>
+                        <p>Contribuciones a la comunidad</p>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h5>Apps Móviles</h5>
+                        <p>PWA, React Native, Flutter</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Contact Actions -->
+            <div class="quick-actions mt-4">
+                <h3 class="mb-3">
+                    <i class="fas fa-bolt me-2 text-purple"></i>Contacto Rápido
+                </h3>
+                <div class="action-buttons">
+                    <a href="mailto:{{ email }}?subject=Consulta de Proyecto" class="action-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Directo</span>
+                    </a>
+                    <a href="https://calendly.com" target="_blank" class="action-btn">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Agendar Reunión</span>
+                    </a>
+                    <a href="https://wa.me/56912345678" target="_blank" class="action-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="action-btn">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- Main Contact Section -->
-<main class="contact-main">
-    <div class="container">
-        <div class="row g-4">
-            <!-- Contact Information -->
-            <div class="col-lg-8">
-                <div class="contact-info-card" data-aos="fade-up">
-                    <h2 class="section-title">
-                        <i class="fas fa-address-card me-3"></i>
-                        Información de Contacto
-                    </h2>
-                    
-                    <div class="contact-grid">
-                        <!-- Email -->
-                        <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
-                            <div class="contact-icon email">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-content">
-                                <h3>Email Principal</h3>
-                                <a href="mailto:jnavarrete2626@gmail.com" class="contact-link">
-                                    jnavarrete2626@gmail.com
-                                </a>
-                                <p class="contact-note">Respuesta garantizada en 24 horas</p>
-                            </div>
-                        </div>
-
-                        <!-- Location -->
-                        <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
-                            <div class="contact-icon location">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-content">
-                                <h3>Ubicación</h3>
-                                <p class="contact-text">Iquique, Chile</p>
-                                <p class="contact-note">Trabajo remoto disponible globalmente</p>
-                            </div>
-                        </div>
-
-                        <!-- Schedule -->
-                        <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
-                            <div class="contact-icon schedule">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-content">
-                                <h3>Horario de Disponibilidad</h3>
-                                <p class="contact-text">Lunes a Viernes: 9:00 - 18:00</p>
-                                <p class="contact-note">Zona horaria: GMT-3 (Chile)</p>
-                            </div>
-                        </div>
-
-                        <!-- Response Time -->
-                        <div class="contact-item" data-aos="fade-up" data-aos-delay="400">
-                            <div class="contact-icon response">
-                                <i class="fas fa-reply"></i>
-                            </div>
-                            <div class="contact-content">
-                                <h3>Tiempo de Respuesta</h3>
-                                <p class="contact-text">Máximo 24 horas</p>
-                                <p class="contact-note">Consultas urgentes en el mismo día</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions & Social -->
-            <div class="col-lg-4">
-                <!-- Quick Contact -->
-                <div class="quick-contact-card" data-aos="fade-up" data-aos-delay="500">
-                    <h3 class="card-title">
-                        <i class="fas fa-rocket me-2"></i>
-                        Contacto Rápido
-                    </h3>
-                    
-                    <div class="quick-actions">
-                        <a href="mailto:jnavarrete2626@gmail.com" class="quick-action email-action">
-                            <div class="action-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="action-content">
-                                <h4>Enviar Email</h4>
-                                <p>Directo a mi bandeja</p>
-                            </div>
-                            <i class="fas fa-arrow-right action-arrow"></i>
-                        </a>
-
-                        <a href="#" class="quick-action phone-action">
-                            <div class="action-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="action-content">
-                                <h4>Llamar</h4>
-                                <p>Para consultas urgentes</p>
-                            </div>
-                            <i class="fas fa-arrow-right action-arrow"></i>
-                        </a>
-
-                        <a href="#" class="quick-action whatsapp-action" target="_blank">
-                            <div class="action-icon">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <div class="action-content">
-                                <h4>WhatsApp</h4>
-                                <p>Mensaje directo</p>
-                            </div>
-                            <i class="fas fa-arrow-right action-arrow"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Social Networks -->
-                <div class="social-card" data-aos="fade-up" data-aos-delay="600">
-                    <h3 class="card-title">
-                        <i class="fas fa-share-alt me-2"></i>
-                        Redes Sociales
-                    </h3>
-                    
-                    <div class="social-grid">
-                        <a href="https://www.linkedin.com/in/jesus-antonio-navarrete-castillo-57b807240/" 
-                           class="social-link linkedin" 
-                           target="_blank" 
-                           data-platform="LinkedIn">
-                            <div class="social-icon">
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                            <div class="social-info">
-                                <h4>LinkedIn</h4>
-                                <p>Perfil profesional</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call to Action Section -->
-        <div class="cta-section" data-aos="fade-up" data-aos-delay="700">
-            <div class="cta-content">
-                <h2 class="cta-title">¿Listo para comenzar tu proyecto?</h2>
-                <p class="cta-description">
-                    Especializado en análisis de datos y desarrollo web. 
-                    Transformo ideas en soluciones digitales efectivas.
-                </p>
-                <div class="cta-buttons">
-                    <a href="mailto:jnavarrete2626@gmail.com?subject=Nuevo%20Proyecto&body=Hola%20Jesús,%0A%0AMe%20gustaría%20discutir%20un%20proyecto%20contigo.%0A%0ADetalles:%0A-%20Tipo%20de%20proyecto:%0A-%20Presupuesto%20estimado:%0A-%20Fecha%20límite:%0A%0ASaludos!" 
-                       class="cta-btn primary">
-                        <i class="fas fa-rocket me-2"></i>
-                        Iniciar Proyecto
-                    </a>
-                    <a href="{% url 'project_list' %}" class="cta-btn secondary">
-                        <i class="fas fa-eye me-2"></i>
-                        Ver Portafolio
-                    </a>
-                </div>
-            </div>
+<!-- Social Media Section -->
+<div class="social-section mt-5">
+    <div class="social-content">
+        <h2 class="mb-3">Sígueme en Redes Sociales</h2>
+        <p class="mb-0 opacity-90">
+            Mantente al día con mis últimos proyectos y pensamientos sobre tecnología
+        </p>
+        
+        <div class="social-links">
+            <a href="https://github.com" target="_blank" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://twitter.com" target="_blank" class="social-link" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://dev.to" target="_blank" class="social-link" title="Dev.to">
+                <i class="fab fa-dev"></i>
+            </a>
+            <a href="mailto:{{ email }}" class="social-link" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
         </div>
     </div>
-</main>
+</div>
 
-<!-- Availability Status -->
-<div class="availability-status" id="availabilityStatus">
-    <div class="status-indicator">
-        <div class="status-dot available"></div>
-        <span class="status-text">Disponible para nuevos proyectos</span>
+<!-- FAQ Section -->
+<div class="contact-card mt-4">
+    <h2 class="section-title">
+        <i class="fas fa-question-circle"></i>Preguntas Frecuentes
+    </h2>
+    
+    <div class="accordion" id="faqAccordion">
+        <div class="accordion-item bg-dark border-secondary">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    ¿Cuánto tiempo tomas para responder?
+                </button>
+            </h3>
+            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body bg-dark text-secondary">
+                    Generalmente respondo a todos los mensajes dentro de 24-48 horas. Si tu proyecto es urgente, 
+                    contáctame por WhatsApp para una respuesta más rápida.
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item bg-dark border-secondary">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    ¿Trabajas con proyectos remotos?
+                </button>
+            </h3>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body bg-dark text-secondary">
+                    Sí, trabajo principalmente de forma remota y he colaborado con equipos de diferentes países. 
+                    Tengo experiencia en metodologías ágiles y herramientas de colaboración online.
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item bg-dark border-secondary">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    ¿Cuáles son tus tarifas?
+                </button>
+            </h3>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body bg-dark text-secondary">
+                    Mis tarifas varían según la complejidad del proyecto, tecnologías requeridas y plazos de entrega. 
+                    Contactame con los detalles de tu proyecto para una cotización personalizada.
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item bg-dark border-secondary">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    ¿Ofreces mantenimiento post-proyecto?
+                </button>
+            </h3>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body bg-dark text-secondary">
+                    Absolutamente. Ofrezco planes de mantenimiento y soporte continuo para asegurar que tu proyecto 
+                    funcione de manera óptima a largo plazo.
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/contact.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Contact methods hover effects
+    const contactMethods = document.querySelectorAll('.contact-method');
+    contactMethods.forEach(method => {
+        method.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.contact-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            }
+        });
+        
+        method.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.contact-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+    
+    // Social links hover effects
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.15) rotate(10deg)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(-3px) scale(1.1) rotate(0deg)';
+        });
+    });
+    
+    // Preference items interaction
+    const preferenceItems = document.querySelectorAll('.preference-item');
+    preferenceItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.preference-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(10deg)';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.preference-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+    
+    // Action buttons hover effects
+    const actionBtns = document.querySelectorAll('.action-btn');
+    actionBtns.forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1.2) rotate(10deg)';
+            }
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+    
+    // Current time display
+    function updateCurrentTime() {
+        const now = new Date();
+        const chileTime = new Intl.DateTimeFormat('es-CL', {
+            timeZone: 'America/Santiago',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).format(now);
+        
+        const timezoneInfo = document.querySelector('.timezone-info');
+        if (timezoneInfo && !timezoneInfo.querySelector('.current-time')) {
+            const timeElement = document.createElement('div');
+            timeElement.className = 'current-time mt-2';
+            timeElement.innerHTML = `<small class="text-purple"><i class="fas fa-clock me-1"></i>Hora actual: ${chileTime}</small>`;
+            timezoneInfo.appendChild(timeElement);
+        } else if (timezoneInfo) {
+            const currentTimeElement = timezoneInfo.querySelector('.current-time small');
+            if (currentTimeElement) {
+                currentTimeElement.innerHTML = `<i class="fas fa-clock me-1"></i>Hora actual: ${chileTime}`;
+            }
+        }
+    }
+    
+    // Update time immediately and then every second
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+    
+    // Working hours indicator
+    function updateWorkingStatus() {
+        const now = new Date();
+        const chileTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Santiago"}));
+        const hour = chileTime.getHours();
+        const day = chileTime.getDay();
+        
+        let isWorking = false;
+        let statusText = '';
+        
+        if (day >= 1 && day <= 5) {
+            if (hour >= 9 && hour < 18) {
+                isWorking = true;
+                statusText = 'En línea - Horario laboral';
+            } else {
+                statusText = 'Fuera de horario laboral';
+            }
+        } else if (day === 6) {
+            if (hour >= 10 && hour < 14) {
+                isWorking = true;
+                statusText = 'Disponible - Solo urgencias';
+            } else {
+                statusText = 'Fin de semana';
+            }
+        } else {
+            statusText = 'Día de descanso';
+        }
+        
+        const availabilityBadge = document.querySelector('.availability-badge');
+        if (availabilityBadge) {
+            const dot = availabilityBadge.querySelector('.availability-dot');
+            const textNode = availabilityBadge.lastChild;
+            
+            if (isWorking) {
+                availabilityBadge.style.backgroundColor = 'var(--success)';
+            } else {
+                availabilityBadge.style.backgroundColor = 'var(--text-muted)';
+            }
+            
+            if (textNode && textNode.nodeType === 3) {
+                textNode.textContent = statusText;
+            }
+        }
+    }
+    
+    updateWorkingStatus();
+    setInterval(updateWorkingStatus, 60000);
+    
+    // Copy email to clipboard
+    const emailMethods = document.querySelectorAll('a[href^="mailto:"]');
+    emailMethods.forEach(method => {
+        method.addEventListener('click', function(e) {
+            if (!this.href.includes('subject=')) {
+                e.preventDefault();
+                const email = this.href.replace('mailto:', '');
+                
+                navigator.clipboard.writeText(email).then(() => {
+                    showAlert('Email copiado al portapapeles', 'success');
+                }).catch(() => {
+                    window.location.href = this.href;
+                });
+            }
+        });
+    });
+    
+    function showAlert(message, type) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+        alertDiv.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(alertDiv);
+        
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 3000);
+    }
+});
+</script>
 {% endblock %}

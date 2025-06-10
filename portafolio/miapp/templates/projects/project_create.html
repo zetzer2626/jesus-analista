@@ -1,13 +1,676 @@
 {% extends 'base.html' %}
 
-{% block title %}Crear Proyecto{% endblock %}
+{% block title %}Crear Proyecto - Mi Portafolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        margin: 2rem 0;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-border);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: var(--dark-bg);
+        border-radius: 0.5rem;
+        border: 1px solid var(--dark-border);
+    }
+
+    .form-section-title {
+        color: var(--twitch-purple);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-section-title i {
+        margin-right: 0.5rem;
+    }
+
+    .form-control:focus {
+        border-color: var(--twitch-purple);
+        box-shadow: 0 0 0 0.2rem rgba(145, 70, 255, 0.25);
+    }
+
+    .form-text {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+    }
+
+    .file-upload-area {
+        border: 2px dashed var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .file-upload-area:hover {
+        border-color: var(--twitch-purple);
+        background-color: rgba(145, 70, 255, 0.05);
+    }
+
+    .file-upload-area.dragover {
+        border-color: var(--twitch-purple);
+        background-color: rgba(145, 70, 255, 0.1);
+    }
+
+    .file-upload-icon {
+        font-size: 3rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+    }
+
+    .file-preview {
+        margin-top: 1rem;
+        display: none;
+    }
+
+    .file-preview img {
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 0.5rem;
+        border: 1px solid var(--dark-border);
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .image-upload-slot {
+        position: relative;
+        border: 2px dashed var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .image-upload-slot:hover {
+        border-color: var(--twitch-purple);
+        background-color: rgba(145, 70, 255, 0.05);
+    }
+
+    .image-upload-slot.has-image {
+        border-style: solid;
+        border-color: var(--twitch-purple);
+    }
+
+    .image-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.25rem;
+    }
+
+    .remove-image {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: var(--danger);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.75rem;
+    }
+
+    .required-field {
+        color: var(--danger);
+    }
+
+    .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .checkbox-item:hover {
+        border-color: var(--twitch-purple);
+        background-color: var(--dark-surface-hover);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        margin-right: 0.5rem;
+        accent-color: var(--twitch-purple);
+    }
+
+    .btn-save {
+        background: linear-gradient(45deg, var(--twitch-purple), var(--twitch-dark-purple));
+        border: none;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .breadcrumb-item a {
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        color: var(--twitch-purple);
+    }
+
+    .breadcrumb-item.active {
+        color: var(--text-primary);
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .form-section {
+            padding: 1rem;
+        }
+        
+        .image-grid {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<h1>Crear Nuevo Proyecto</h1>
-<form method="post" enctype="multipart/form-data" class="form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{% url 'project_list' %}">
+                <i class="fas fa-home me-1"></i>Proyectos
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Crear Proyecto</li>
+    </ol>
+</nav>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1 class="text-purple mb-3">
+            <i class="fas fa-plus-circle me-2"></i>Crear Nuevo Proyecto
+        </h1>
+        <p class="text-secondary">Comparte tu trabajo y muestra tus habilidades al mundo</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" id="projectForm">
+        {% csrf_token %}
+        
+        <!-- Basic Information -->
+        <div class="form-section">
+            <h3 class="form-section-title">
+                <i class="fas fa-info-circle"></i>Información Básica
+            </h3>
+            
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">
+                        Título del Proyecto <span class="required-field">*</span>
+                    </label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.title.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="form-text">Un título descriptivo y atractivo para tu proyecto</div>
+                </div>
+                
+                <div class="col-12 mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">
+                        Descripción <span class="required-field">*</span>
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.description.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="form-text">Describe tu proyecto, las tecnologías utilizadas y los desafíos superados</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="form-section">
+            <h3 class="form-section-title">
+                <i class="fas fa-tags"></i>Categorías
+            </h3>
+            
+            <label class="form-label">Selecciona las categorías que mejor describan tu proyecto</label>
+            <div class="checkbox-group">
+                {% for choice in form.categorias %}
+                <div class="checkbox-item">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            {% if form.categorias.errors %}
+                <div class="text-danger mt-2">
+                    {% for error in form.categorias.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Main Image -->
+        <div class="form-section">
+            <h3 class="form-section-title">
+                <i class="fas fa-image"></i>Imagen Principal
+            </h3>
+            
+            <div class="file-upload-area" onclick="document.getElementById('{{ form.project_image.id_for_label }}').click()">
+                <div class="file-upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h5>Subir Imagen Principal</h5>
+                <p class="text-muted mb-0">Haz clic aquí o arrastra y suelta una imagen</p>
+                <small class="form-text">Formatos aceptados: JPG, PNG, GIF (Max. 10MB)</small>
+                {{ form.project_image }}
+            </div>
+            <div class="file-preview" id="mainImagePreview"></div>
+        </div>
+
+        <!-- Gallery Images -->
+        <div class="form-section">
+            <h3 class="form-section-title">
+                <i class="fas fa-images"></i>Galería de Imágenes
+            </h3>
+            <p class="text-secondary mb-3">Agrega hasta 10 imágenes adicionales para mostrar tu proyecto</p>
+            
+            <div class="image-grid">
+                {% for i in "1234567890" %}
+                <div class="image-upload-slot" onclick="document.getElementById('id_img_{{ i }}').click()">
+                    <i class="fas fa-plus fa-2x text-muted"></i>
+                    <small class="text-muted mt-2">Imagen {{ i }}</small>
+                    <input type="file" id="id_img_{{ i }}" name="img_{{ i }}" accept="image/*" style="display: none;" onchange="previewImage(this, {{ i }})">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Links and Files -->
+        <div class="form-section">
+            <h3 class="form-section-title">
+                <i class="fas fa-link"></i>Enlaces y Archivos
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.github_url.id_for_label }}" class="form-label">
+                        <i class="fab fa-github me-1"></i>URL de GitHub
+                    </label>
+                    {{ form.github_url }}
+                    <div class="form-text">Enlace al repositorio del proyecto</div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.video_url.id_for_label }}" class="form-label">
+                        <i class="fas fa-video me-1"></i>URL de Video
+                    </label>
+                    {{ form.video_url }}
+                    <div class="form-text">YouTube, Vimeo u otra plataforma</div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.video_file.id_for_label }}" class="form-label">
+                        <i class="fas fa-file-video me-1"></i>Archivo de Video
+                    </label>
+                    {{ form.video_file }}
+                    <div class="form-text">Sube un video directamente</div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.project_file.id_for_label }}" class="form-label">
+                        <i class="fas fa-file-alt me-1"></i>Archivo del Proyecto
+                    </label>
+                    {{ form.project_file }}
+                    <div class="form-text">Documentación, APK, ejecutable, etc.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{% url 'project_list' %}" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-save text-white w-100">
+                        <i class="fas fa-save me-2"></i>Crear Proyecto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Form validation
+    const form = document.getElementById('projectForm');
+    const requiredFields = form.querySelectorAll('input[required], textarea[required]');
+    
+    // Main image preview
+    const mainImageInput = document.getElementById('{{ form.project_image.id_for_label }}');
+    if (mainImageInput) {
+        mainImageInput.addEventListener('change', function() {
+            const preview = document.getElementById('mainImagePreview');
+            const file = this.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `
+                        <div class="text-center">
+                            <img src="${e.target.result}" class="img-fluid" style="max-height: 200px; border-radius: 0.5rem;">
+                            <p class="mt-2 text-success">
+                                <i class="fas fa-check-circle me-1"></i>Imagen cargada: ${file.name}
+                            </p>
+                        </div>
+                    `;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Drag and drop for main image
+    const uploadArea = document.querySelector('.file-upload-area');
+    if (uploadArea) {
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadArea.classList.add('dragover');
+        }
+
+        function unhighlight(e) {
+            uploadArea.classList.remove('dragover');
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                mainImageInput.files = files;
+                mainImageInput.dispatchEvent(new Event('change'));
+            }
+        }
+    }
+
+    // Form submission validation
+    form.addEventListener('submit', function(e) {
+        let isValid = true;
+        const errors = [];
+
+        // Check required fields
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                errors.push(`El campo "${field.previousElementSibling.textContent.replace('*', '').trim()}" es requerido`);
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        });
+
+        // Check if at least one category is selected
+        const categoryCheckboxes = form.querySelectorAll('input[name="categorias"]:checked');
+        if (categoryCheckboxes.length === 0) {
+            isValid = false;
+            errors.push('Debes seleccionar al menos una categoría');
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            
+            // Show errors
+            let errorMessage = 'Por favor corrige los siguientes errores:\n\n';
+            errors.forEach(error => {
+                errorMessage += `• ${error}\n`;
+            });
+            
+            alert(errorMessage);
+            
+            // Scroll to first error
+            const firstError = form.querySelector('.is-invalid');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstError.focus();
+            }
+        }
+    });
+
+    // Auto-resize textareas
+    const textareas = form.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    });
+
+    // Character counter for title and description
+    const titleInput = form.querySelector('#{{ form.title.id_for_label }}');
+    const descriptionInput = form.querySelector('#{{ form.description.id_for_label }}');
+    
+    if (titleInput) {
+        addCharacterCounter(titleInput, 200);
+    }
+    
+    if (descriptionInput) {
+        addCharacterCounter(descriptionInput, 1000);
+    }
+
+    function addCharacterCounter(input, maxLength) {
+        const counter = document.createElement('div');
+        counter.className = 'form-text text-end';
+        counter.style.fontSize = '0.8rem';
+        input.parentNode.appendChild(counter);
+        
+        function updateCounter() {
+            const remaining = maxLength - input.value.length;
+            counter.textContent = `${input.value.length}/${maxLength} caracteres`;
+            
+            if (remaining < 20) {
+                counter.className = 'form-text text-end text-warning';
+            } else if (remaining < 0) {
+                counter.className = 'form-text text-end text-danger';
+            } else {
+                counter.className = 'form-text text-end text-muted';
+            }
+        }
+        
+        input.addEventListener('input', updateCounter);
+        updateCounter();
+    }
+
+    // Save draft functionality
+    const saveAsDraftBtn = document.createElement('button');
+    saveAsDraftBtn.type = 'button';
+    saveAsDraftBtn.className = 'btn btn-outline-primary';
+    saveAsDraftBtn.innerHTML = '<i class="fas fa-save me-1"></i>Guardar Borrador';
+    saveAsDraftBtn.onclick = saveDraft;
+    
+    // Add save draft button next to cancel
+    const cancelBtn = form.querySelector('.btn-outline-secondary');
+    if (cancelBtn) {
+        cancelBtn.parentNode.appendChild(saveAsDraftBtn);
+        cancelBtn.classList.remove('w-100');
+        saveAsDraftBtn.classList.add('w-100', 'mt-2');
+    }
+
+    function saveDraft() {
+        const formData = new FormData(form);
+        const draftData = {};
+        
+        for (let [key, value] of formData.entries()) {
+            if (value && typeof value === 'string') {
+                draftData[key] = value;
+            }
+        }
+        
+        localStorage.setItem('projectDraft', JSON.stringify(draftData));
+        
+        // Show success message
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-success alert-dismissible fade show mt-3';
+        alert.innerHTML = `
+            <i class="fas fa-check-circle me-2"></i>Borrador guardado exitosamente
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        form.parentNode.insertBefore(alert, form);
+        
+        setTimeout(() => {
+            alert.remove();
+        }, 3000);
+    }
+
+    // Load draft on page load
+    function loadDraft() {
+        const draft = localStorage.getItem('projectDraft');
+        if (draft) {
+            const draftData = JSON.parse(draft);
+            
+            // Ask user if they want to load the draft
+            if (confirm('Se encontró un borrador guardado. ¿Deseas cargarlo?')) {
+                Object.keys(draftData).forEach(key => {
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (field && field.type !== 'file') {
+                        field.value = draftData[key];
+                        
+                        // Handle checkboxes
+                        if (field.type === 'checkbox') {
+                            field.checked = draftData[key] === 'on';
+                        }
+                    }
+                });
+            } else {
+                localStorage.removeItem('projectDraft');
+            }
+        }
+    }
+    
+    loadDraft();
+
+    // Clear draft on successful submission
+    form.addEventListener('submit', function() {
+        // Clear draft after a short delay (assuming successful submission)
+        setTimeout(() => {
+            localStorage.removeItem('projectDraft');
+        }, 1000);
+    });
+});
+
+// Gallery image preview function
+function previewImage(input, imageNumber) {
+    const slot = input.parentNode;
+    const file = input.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            slot.innerHTML = `
+                <img src="${e.target.result}" class="image-preview" alt="Imagen ${imageNumber}">
+                <button type="button" class="remove-image" onclick="removeImage(this, ${imageNumber})">
+                    <i class="fas fa-times"></i>
+                </button>
+                <input type="file" id="id_img_${imageNumber}" name="img_${imageNumber}" 
+                       accept="image/*" style="display: none;" onchange="previewImage(this, ${imageNumber})">
+            `;
+            slot.classList.add('has-image');
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function removeImage(button, imageNumber) {
+    const slot = button.parentNode;
+    slot.innerHTML = `
+        <i class="fas fa-plus fa-2x text-muted"></i>
+        <small class="text-muted mt-2">Imagen ${imageNumber}</small>
+        <input type="file" id="id_img_${imageNumber}" name="img_${imageNumber}" 
+               accept="image/*" style="display: none;" onchange="previewImage(this, ${imageNumber})">
+    `;
+    slot.classList.remove('has-image');
+    slot.onclick = () => document.getElementById(`id_img_${imageNumber}`).click();
+}
+</script>
 {% endblock %}

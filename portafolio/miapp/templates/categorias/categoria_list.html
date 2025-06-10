@@ -1,272 +1,474 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %}Categorías{% endblock %}
+{% block title %}Categorías - Mi Portafolio{% endblock %}
 
 {% block extra_css %}
 <style>
-  .categoria-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 4rem 0;
-    margin-bottom: 3rem;
-  }
-  
-  .categoria-card {
-    transition: all 0.3s ease;
-    border: none;
-    background: white;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .categoria-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--categoria-color);
-    z-index: 1;
-  }
-  
-  .categoria-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  }
-  
-  .categoria-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    margin: 1.5rem auto 1rem;
-    position: relative;
-    z-index: 2;
-  }
-  
-  .categoria-content {
-    padding: 0 1.5rem 2rem;
-  }
-  
-  .categoria-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-  }
-  
-  .categoria-count {
-    color: #718096;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  
-  .categoria-btn {
-    background: var(--categoria-color);
-    border: none;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 500;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-  }
-  
-  .categoria-btn:hover {
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  }
-  
-  .search-section {
-    background: #f8fafc;
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 3rem;
-  }
-  
-  .search-input {
-    border: 2px solid #e2e8f0;
-    border-radius: 25px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  
-  .search-input:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-  }
-  
-  .stats-card {
-    background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-  }
-  
-  .stats-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #667eea;
-  }
-  
-  .stats-label {
-    color: #718096;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    .categoria-hero {
-      padding: 2rem 0;
+    .hero-section {
+        background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-bg) 100%);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
     }
-    
-    .categoria-card {
-      margin-bottom: 2rem;
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239146ff" fill-opacity="0.05"><polygon points="36 34 24 44 12 34 12 26 24 16 36 26"/></g></svg>') repeat;
+        opacity: 0.3;
     }
-  }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .category-card {
+        transition: all 0.3s ease;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(145, 70, 255, 0.2);
+    }
+
+    .category-image {
+        height: 200px;
+        background: linear-gradient(45deg, var(--dark-surface), var(--dark-surface-hover));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-image img {
+        transform: scale(1.05);
+    }
+
+    .category-placeholder {
+        color: var(--text-muted);
+        font-size: 3rem;
+    }
+
+    .category-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: 1rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .category-card:hover .category-overlay {
+        opacity: 1;
+    }
+
+    .overlay-content {
+        color: white;
+        text-align: center;
+        width: 100%;
+    }
+
+    .project-count {
+        background: linear-gradient(45deg, var(--twitch-purple), var(--twitch-dark-purple));
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .stats-section {
+        background-color: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background-color: var(--dark-bg);
+        border-radius: 0.375rem;
+        border: 1px solid var(--dark-border);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--twitch-purple);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    .category-actions {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-actions {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .breadcrumb-item a {
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        color: var(--twitch-purple);
+    }
+
+    .category-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 0;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+        }
+        
+        .category-image {
+            height: 150px;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="categoria-hero">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-8">
-        <h1 class="display-4 font-weight-bold mb-3">Explora Nuestras Categorías</h1>
-        <p class="lead mb-0">Descubre proyectos organizados por temáticas que te interesan</p>
-      </div>
-      <div class="col-lg-4 text-center">
-        <div class="stats-card">
-          <div class="stats-number">{{ categorias|length }}</div>
-          <div class="stats-label">Categorías disponibles</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="container">
-  <!-- Search Section -->
-  <div class="search-section">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-        <div class="input-group">
-          <input type="text" class="form-control search-input" placeholder="Buscar categorías..." id="searchInput">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button" style="border-radius: 0 25px 25px 0;">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Categories Grid -->
-  <div class="row" id="categoriasGrid">
-    {% for categoria in categorias %}
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-4 categoria-item" data-nombre="{{ categoria.nombre|lower }}">
-        <div class="card categoria-card h-100" style="--categoria-color: {{ categoria.color|default:'#667eea' }};">
-          
-          <!-- Image Section -->
-          <div class="text-center pt-3">
-            {% if categoria.img_1 %}
-              <img src="{{ categoria.img_1.url }}" class="categoria-image" alt="{{ categoria.nombre }}">
-            {% else %}
-              <div class="categoria-image d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, {{ categoria.color|default:'#667eea' }}, {{ categoria.color|default:'#764ba2' }});">
-                <i class="fas fa-folder text-white" style="font-size: 2rem;"></i>
-              </div>
-            {% endif %}
-          </div>
-          
-          <!-- Content Section -->
-          <div class="categoria-content text-center">
-            <h5 class="categoria-title">{{ categoria.nombre }}</h5>
-            
-            <div class="categoria-count">
-              <i class="fas fa-project-diagram" style="color: var(--categoria-color);"></i>
-              <span>{{ categoria.project_count }} proyecto{{ categoria.project_count|pluralize }}</span>
-            </div>
-            
-            <a href="{% url 'categoria_detail' categoria.pk %}" class="categoria-btn">
-              <i class="fas fa-arrow-right"></i>
-              <span>Explorar</span>
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{% url 'project_list' %}">
+                <i class="fas fa-home me-1"></i>Proyectos
             </a>
-          </div>
-        </div>
-      </div>
-    {% empty %}
-      <div class="col-12 text-center py-5">
-        <div class="alert alert-info">
-          <i class="fas fa-info-circle fa-2x mb-3"></i>
-          <h4>No hay categorías disponibles</h4>
-          <p class="mb-0">Pronto agregaremos nuevas categorías de proyectos.</p>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-  
-  <!-- No Results Message -->
-  <div class="row" id="noResults" style="display: none;">
-    <div class="col-12 text-center py-5">
-      <div class="alert alert-warning">
-        <i class="fas fa-search fa-2x mb-3"></i>
-        <h4>No se encontraron categorías</h4>
-        <p class="mb-0">Intenta con otros términos de búsqueda.</p>
-      </div>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Categorías</li>
+    </ol>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section mb-4">
+    <div class="hero-content text-center">
+        <h1 class="display-4 fw-bold text-purple mb-3">
+            <i class="fas fa-tags me-3"></i>Categorías
+        </h1>
+        <p class="lead text-secondary mb-0">
+            Explora mis proyectos organizados por categorías y tecnologías
+        </p>
     </div>
-  </div>
 </div>
 
+<!-- Statistics Section -->
+{% if categorias %}
+<div class="stats-section">
+    <h3 class="text-center mb-4">
+        <i class="fas fa-chart-bar me-2 text-purple"></i>Estadísticas de Categorías
+    </h3>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">{{ categorias|length }}</div>
+            <div class="stat-label">Categorías Totales</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">
+                {% with total_projects=0 %}
+                    {% for categoria in categorias %}
+                        {% with total_projects=total_projects|add:categoria.project_count %}{% endwith %}
+                    {% endfor %}
+                    {{ total_projects }}
+                {% endwith %}
+            </div>
+            <div class="stat-label">Proyectos Totales</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">
+                {% with max_projects=0 %}
+                    {% for categoria in categorias %}
+                        {% if categoria.project_count > max_projects %}
+                            {% with max_projects=categoria.project_count %}{% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ max_projects }}
+                {% endwith %}
+            </div>
+            <div class="stat-label">Más Proyectos por Categoría</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Categories Grid -->
+{% if categorias %}
+<div class="row g-4">
+    {% for categoria in categorias %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card category-card h-100">
+            <div class="category-image">
+                {% if categoria.img_1 %}
+                    <img src="{{ categoria.img_1.url }}" alt="{{ categoria.nombre }}">
+                {% else %}
+                    <i class="fas fa-folder category-placeholder"></i>
+                {% endif %}
+                
+                <div class="category-overlay">
+                    <div class="overlay-content">
+                        <div class="project-count">
+                            {{ categoria.project_count }} proyecto{{ categoria.project_count|pluralize }}
+                        </div>
+                        <div class="category-actions">
+                            <a href="{% url 'categoria_detail' categoria.pk %}" class="btn btn-sm btn-primary me-2">
+                                <i class="fas fa-eye me-1"></i>Ver Proyectos
+                            </a>
+                            <a href="{% url 'project_list' %}?categoria_id={{ categoria.id }}" class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-filter me-1"></i>Filtrar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title mb-0">{{ categoria.nombre }}</h5>
+                    <span class="badge bg-primary">{{ categoria.project_count }}</span>
+                </div>
+                
+                {% if categoria.descripcion %}
+                <p class="category-description flex-grow-1">
+                    {{ categoria.descripcion|truncatewords:25 }}
+                </p>
+                {% else %}
+                <p class="category-description flex-grow-1 text-muted">
+                    <em>Sin descripción disponible</em>
+                </p>
+                {% endif %}
+                
+                <div class="mt-auto">
+                    <div class="btn-group w-100" role="group">
+                        <a href="{% url 'categoria_detail' categoria.pk %}" class="btn btn-primary">
+                            <i class="fas fa-eye me-1"></i>Ver Detalles
+                        </a>
+                        <a href="{% url 'project_list' %}?categoria_id={{ categoria.id }}" class="btn btn-outline-primary">
+                            <i class="fas fa-filter me-1"></i>Filtrar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Quick Actions Section -->
+<div class="text-center mt-5 pt-4 border-top border-secondary">
+    <h4 class="text-secondary mb-3">Acciones Rápidas</h4>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        <a href="{% url 'project_list' %}" class="btn btn-outline-primary">
+            <i class="fas fa-list me-2"></i>Ver Todos los Proyectos
+        </a>
+        <a href="{% url 'project_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Crear Nuevo Proyecto
+        </a>
+    </div>
+</div>
+
+{% else %}
+<!-- Empty State -->
+<div class="empty-state">
+    <i class="fas fa-tags"></i>
+    <h3 class="mt-3">No hay categorías disponibles</h3>
+    <p class="text-secondary">
+        Aún no tienes categorías configuradas para organizar tus proyectos.
+        <br>
+        Las categorías se crean automáticamente cuando creas proyectos.
+    </p>
+    <a href="{% url 'project_create' %}" class="btn btn-primary mt-3">
+        <i class="fas fa-plus me-2"></i>Crear tu primer proyecto
+    </a>
+</div>
+{% endif %}
+
+<!-- Categories Management Info -->
+{% if categorias %}
+<div class="alert alert-info mt-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h5 class="alert-heading mb-1">
+                <i class="fas fa-info-circle me-2"></i>Gestión de Categorías
+            </h5>
+            <p class="mb-0">
+                Las categorías se crean y gestionan automáticamente a través de tus proyectos. 
+                Puedes asignar múltiples categorías a cada proyecto para una mejor organización.
+            </p>
+        </div>
+        <div class="col-md-4 text-md-end mt-2 mt-md-0">
+            <a href="{% url 'project_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Nuevo Proyecto
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
 <script>
-// Funcionalidad de búsqueda
 document.addEventListener('DOMContentLoaded', function() {
-  const searchInput = document.getElementById('searchInput');
-  const categoriasGrid = document.getElementById('categoriasGrid');
-  const noResults = document.getElementById('noResults');
-  
-  if (searchInput) {
-    searchInput.addEventListener('input', function() {
-      const searchTerm = this.value.toLowerCase();
-      const categoriaItems = document.querySelectorAll('.categoria-item');
-      let visibleCount = 0;
-      
-      categoriaItems.forEach(function(item) {
-        const nombre = item.getAttribute('data-nombre');
-        if (nombre.includes(searchTerm)) {
-          item.style.display = 'block';
-          visibleCount++;
-        } else {
-          item.style.display = 'none';
-        }
-      });
-      
-      // Mostrar/ocultar mensaje de no resultados
-      if (visibleCount === 0 && searchTerm !== '') {
-        categoriasGrid.style.display = 'none';
-        noResults.style.display = 'block';
-      } else {
-        categoriasGrid.style.display = 'flex';
-        noResults.style.display = 'none';
-      }
+    // Add hover effects to category cards
+    const categoryCards = document.querySelectorAll('.category-card');
+    
+    categoryCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
     });
-  }
+    
+    // Add click tracking for analytics (optional)
+    categoryCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't track if clicking on buttons
+            if (e.target.closest('.btn')) return;
+            
+            const categoryName = this.querySelector('.card-title').textContent;
+            console.log(`Category viewed: ${categoryName}`);
+            
+            // You can add analytics tracking here
+            // gtag('event', 'category_view', {
+            //     'category_name': categoryName
+            // });
+        });
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        // Arrow key navigation between categories
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            const focusedElement = document.activeElement;
+            const categoryLinks = Array.from(document.querySelectorAll('.category-card .btn-primary'));
+            const currentIndex = categoryLinks.indexOf(focusedElement);
+            
+            if (currentIndex !== -1) {
+                e.preventDefault();
+                let nextIndex;
+                
+                if (e.key === 'ArrowRight') {
+                    nextIndex = (currentIndex + 1) % categoryLinks.length;
+                } else {
+                    nextIndex = currentIndex === 0 ? categoryLinks.length - 1 : currentIndex - 1;
+                }
+                
+                categoryLinks[nextIndex].focus();
+            }
+        }
+    });
+    
+    // Enhanced card interactions
+    categoryCards.forEach(card => {
+        const image = card.querySelector('.category-image img');
+        const overlay = card.querySelector('.category-overlay');
+        
+        if (image) {
+            card.addEventListener('mouseenter', function() {
+                image.style.transform = 'scale(1.1)';
+                if (overlay) {
+                    overlay.style.opacity = '1';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                image.style.transform = 'scale(1.05)';
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                }
+            });
+        }
+    });
+    
+    // Add loading states for buttons
+    const filterButtons = document.querySelectorAll('a[href*="categoria_id"]');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Cargando...';
+            this.classList.add('disabled');
+            
+            // Reset after 3 seconds in case navigation fails
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.classList.remove('disabled');
+            }, 3000);
+        });
+    });
 });
 </script>
 {% endblock %}
